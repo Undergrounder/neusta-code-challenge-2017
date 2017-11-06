@@ -1,7 +1,2 @@
 group 'de.neusta_sd.roomsmanager.core'
 version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8

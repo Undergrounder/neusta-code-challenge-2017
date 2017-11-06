@@ -1,11 +1,10 @@
-group 'de.neusta_sd.roomsmanager'
+group 'de.neusta_sd.roomsmanager.war'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'war'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+apply plugin: 'org.springframework.boot'
 
 dependencies{
+    compile('org.springframework.boot:spring-boot-starter')
     compile project(':roomsmanager-frontend')
 }
