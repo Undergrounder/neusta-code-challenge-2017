@@ -1,4 +1,6 @@
 rootProject.name = 'roomsmanager-pom'
 include 'core'
 findProject(':core')?.name = 'roomsmanager-core'
+include 'facades'
+findProject(':facades')?.name = 'roomsmanager-facades'
 
