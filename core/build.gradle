@@ -1,4 +1,4 @@
-group 'de.neusta_sd.roomsmanager'
+group 'de.neusta_sd.roomsmanager.core'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
