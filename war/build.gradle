@@ -1,0 +1,11 @@
+group 'de.neusta_sd.roomsmanager'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies{
+    compile project(':roomsmanager-frontend')
+}

@@ -5,4 +5,6 @@ include 'facades'
 findProject(':facades')?.name = 'roomsmanager-facades'
 include 'frontend'
 findProject(':frontend')?.name = 'roomsmanager-frontend'
+include 'war'
+findProject(':war')?.name = 'roomsmanager-war'
 
