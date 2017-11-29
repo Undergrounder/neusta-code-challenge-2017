@@ -23,5 +23,6 @@ subprojects{
 
     dependencies{
         compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+        compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     }
 }
