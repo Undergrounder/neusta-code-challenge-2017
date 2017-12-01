@@ -11,7 +11,7 @@ public class NameAddition {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10, nullable = false, unique = true)
     private String name;
 
     public NameAddition() {
