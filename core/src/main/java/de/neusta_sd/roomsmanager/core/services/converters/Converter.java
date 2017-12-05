@@ -6,7 +6,7 @@ package de.neusta_sd.roomsmanager.core.services.converters;
 public interface Converter<S, T> {
     T convert(S source) throws ConversionException;
 
-    class ConversionException extends Exception {
+    class ConversionException extends RuntimeException {
         public ConversionException(String message) {
             super(message);
         }
