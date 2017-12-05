@@ -1,25 +1,23 @@
 package de.neusta_sd.roomsmanager.frontend.controllers;
 
-import org.springframework.http.HttpHeaders;
+import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.servlet.http.HttpServletRequest;
+import static de.neusta_sd.roomsmanager.frontend.controllers.ApiController.BASE_PATH;
 
 /**
  * Created by Adrian Tello on 02/12/2017.
  */
 @RestController
+@RequestMapping(BASE_PATH)
 public class ApiController extends AbstractApiController {
 
-    @RequestMapping("/api/**")
-    public ResponseEntity<Object> unhandledCall(final HttpServletRequest request, @RequestHeader final HttpHeaders httpHeaders) throws NoHandlerFoundException {
-        final String method = request.getMethod();
-        final String requestUri = request.getRequestURI();
+    public static final String BASE_PATH = "/api";
 
-        throw new NoHandlerFoundException(method, requestUri, httpHeaders);
+    @RequestMapping("/**")
+    public ResponseEntity<Object> unhandledCall() throws NotFoundException {
+        throw new NotFoundException("Not Found.");
     }
 }

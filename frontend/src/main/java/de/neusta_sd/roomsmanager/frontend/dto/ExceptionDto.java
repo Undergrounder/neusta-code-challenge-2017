@@ -1,4 +1,4 @@
-package de.neusta_sd.roomsmanager.frontend.dto.responses;
+package de.neusta_sd.roomsmanager.frontend.dto;
 
 import lombok.NonNull;
 import lombok.Value;
@@ -7,7 +7,7 @@ import lombok.Value;
  * Created by Adrian Tello on 04/12/2017.
  */
 @Value
-public class ExceptionResponse {
+public class ExceptionDto {
     private int code;
 
     @NonNull

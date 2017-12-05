@@ -1,6 +1,7 @@
 package de.neusta_sd.roomsmanager.frontend.controllers;
 
-import de.neusta_sd.roomsmanager.frontend.dto.responses.ExceptionResponse;
+import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
+import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -10,8 +11,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public abstract class AbstractApiController {
     private final static String NOT_FOUND_MESSAGE = "Not Found";
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ExceptionResponse handleError404(Exception e) {
-        return new ExceptionResponse(404, NOT_FOUND_MESSAGE);
+    @ExceptionHandler(value = {NoHandlerFoundException.class, NotFoundException.class})
+    public ExceptionDto handleError404(Exception e) {
+        return new ExceptionDto(404, NOT_FOUND_MESSAGE);
     }
 }
