@@ -2,6 +2,7 @@ package de.neusta_sd.roomsmanager.facades.imprt.csv.parser;
 
 import lombok.Builder;
 import lombok.NonNull;
+import lombok.Singular;
 import lombok.Value;
 
 import java.io.InputStream;
@@ -16,6 +17,7 @@ public interface ImportCsvParser {
     @Builder
     @Value
     class CsvImportData {
+        @Singular("roomData")
         private List<CsvRoomData> roomDataList;
     }
 
@@ -24,6 +26,8 @@ public interface ImportCsvParser {
     class CsvRoomData {
         @NonNull
         private String number;
+
+        @Singular("personData")
         private List<CsvPersonData> personDataList;
     }
 

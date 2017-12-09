@@ -17,7 +17,7 @@ public class CsvPersonDataConverterImpl implements CsvPersonDataConverter {
                 .firstName(source.getFirstName())
                 .nameAddition(source.getNameAddition())
                 .lastName(source.getLastName())
-                .lastName(source.getLdapUser())
+                .ldapUser(source.getLdapUser())
                 .build();
     }
 }
