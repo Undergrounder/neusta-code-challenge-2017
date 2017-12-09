@@ -12,7 +12,12 @@ public abstract class AbstractApiController {
     private final static String NOT_FOUND_MESSAGE = "Not Found";
 
     @ExceptionHandler(value = {NoHandlerFoundException.class, NotFoundException.class})
-    public ExceptionDto handleError404(Exception e) {
+    public ExceptionDto handleError404(final Exception e) {
         return new ExceptionDto(404, NOT_FOUND_MESSAGE);
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ExceptionDto handleException(final Exception e) {
+        return new ExceptionDto(500, e.getMessage());
     }
 }
