@@ -29,10 +29,13 @@ public class ImportFacadeImpl implements ImportFacade {
     }
 
     @Override
-    public void importStream(final InputStream inputStream) throws ImportException {
+    public PostImportResultData importStream(final InputStream inputStream) throws ImportException {
         final ImportCsvParser.CsvImportData csvImportData = parseCsv(inputStream);
         final ImportService.ImportData importData = getCsvImportDataConverter().convert(csvImportData);
         doImport(importData);
+
+        return PostImportResultData.builder()
+                .build();
     }
 
     private ImportCsvParser.CsvImportData parseCsv(final InputStream inputStream) throws ImportException {

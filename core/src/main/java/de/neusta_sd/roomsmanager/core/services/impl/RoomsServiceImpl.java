@@ -6,6 +6,7 @@ import de.neusta_sd.roomsmanager.core.services.RoomsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,6 +24,15 @@ public class RoomsServiceImpl implements RoomsService {
 
     @Override
     public Optional<Room> findRoomByNumber(String number) {
-        return roomRepository.findOneByNumber(number);
+        return getRoomRepository().findOneByNumber(number);
+    }
+
+    @Override
+    public List<Room> findAll() {
+        return getRoomRepository().findAll();
+    }
+
+    private RoomRepository getRoomRepository() {
+        return roomRepository;
     }
 }

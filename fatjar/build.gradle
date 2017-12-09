@@ -6,4 +6,7 @@ apply plugin: 'org.springframework.boot'
 dependencies{
     compile('org.springframework.boot:spring-boot-starter')
     compile project(':roomsmanager-frontend')
+
+    testCompile 'junit:junit:4.12'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
