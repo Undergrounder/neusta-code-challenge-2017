@@ -63,6 +63,25 @@ public class ImportApiControllerIntegrationTest {
         assertEquals(0, personList.size());
     }
 
+    @Test
+    public void testExampleFile() throws IOException {
+        //Test
+        final ResponseEntity<ImportFacade.PostImportResultData> responseEntity = postResource("/imports/sitzplan.csv");
+
+        //Verify
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        assertNotNull(responseEntity.getBody());
+
+        //Verify database
+        final List<Room> roomList = roomsService.findAll();
+        assertNotNull(roomList);
+        assertEquals(15, roomList.size());
+
+        final List<Person> personList = personsService.findAll();
+        assertNotNull(personList);
+        assertEquals(49, personList.size());
+    }
+
     private ResponseEntity<ImportFacade.PostImportResultData> postResource(final String path) {
         final MultiValueMap<String, Object> multipartRequest = new LinkedMultiValueMap<>();
 

@@ -59,8 +59,8 @@ public class ImportServiceImpl implements ImportService {
     @Transactional
     private void doImportData(final ImportData importData) throws Converter.ConversionException {
         //Remove current data
-        personRepository.deleteAll();
-        roomRepository.deleteAll();
+        personRepository.deleteAllInBatch();
+        roomRepository.deleteAllInBatch();
 
         //Convert import data
         final List<Room> roomList = new ArrayList<>();

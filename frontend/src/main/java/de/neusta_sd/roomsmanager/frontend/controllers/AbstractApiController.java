@@ -11,13 +11,12 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public abstract class AbstractApiController {
     private final static String NOT_FOUND_MESSAGE = "Not Found";
 
-    @ExceptionHandler(value = {NoHandlerFoundException.class, NotFoundException.class})
-    public ExceptionDto handleError404(final Exception e) {
-        return new ExceptionDto(404, NOT_FOUND_MESSAGE);
-    }
-
     @ExceptionHandler(value = {Exception.class})
     public ExceptionDto handleException(final Exception e) {
-        return new ExceptionDto(500, e.getMessage());
+        if (e instanceof NoHandlerFoundException || e instanceof NotFoundException) {
+            return new ExceptionDto(404, NOT_FOUND_MESSAGE);
+        } else {
+            return new ExceptionDto(500, e.getMessage());
+        }
     }
 }
