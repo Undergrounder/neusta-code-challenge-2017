@@ -14,14 +14,21 @@ import org.springframework.stereotype.Component;
 public class PersonConverterImpl implements PersonConverter {
     @Override
     public PersonDto convert(final Person source) throws ConversionException {
-        final String firstName = source.getFirstName();
-        final String lastName = source.getLastName();
-        final Title title = source.getTitle();
-        final String titleStr = (title == null) ? null : title.getName();
-        final NameAddition nameAddition = source.getNameAddition();
-        final String nameAdditionStr = (nameAddition == null) ? null : nameAddition.getName();
-        final String ldapuser = source.getLdapUser();
+        PersonDto.PersonDtoBuilder builder =  PersonDto.builder()
+                .firstName(source.getFirstName())
+                .lastName(source.getLastName())
+                .ldapuser(source.getLdapUser());
 
-        return new PersonDto(firstName, lastName, titleStr, nameAdditionStr, ldapuser);
+        final Title title = source.getTitle();
+        if(title != null){
+            builder.title(title.getName());
+        }
+
+        final NameAddition nameAddition = source.getNameAddition();
+        if(nameAddition != null){
+            builder.nameAddition(nameAddition.getName());
+        }
+
+        return builder.build();
     }
 }

@@ -7,15 +7,15 @@ import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Adrian Tello on 11/12/2017.
@@ -44,7 +44,7 @@ public abstract class AbstractApiIntegrationTest {
 
         final HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(multipartRequest, header);
         final RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity("http://localhost:" + getPort() + "/api/import", requestEntity, ImportResultDto.class);
+        return restTemplate.postForEntity( getBaseUrl() + "/api/import", requestEntity, ImportResultDto.class);
     }
 
     protected ResponseEntity<ImportResultDto> importSitzplanFile()
@@ -52,7 +52,25 @@ public abstract class AbstractApiIntegrationTest {
         return postResource("/imports/sitzplan.csv");
     }
 
+    protected ResponseEntity<ImportResultDto> prepareSitzplanFile()
+    {
+        final ResponseEntity<ImportResultDto> importResultDtoResponseEntity = importSitzplanFile();
+
+        assertEquals(HttpStatus.ACCEPTED, importResultDtoResponseEntity.getStatusCode());
+
+        final ImportResultDto importResultDto = importResultDtoResponseEntity.getBody();
+        assertNotNull(importResultDto);
+        assertEquals(15, importResultDto.getRooms());
+        assertEquals(49, importResultDto.getPersons());
+
+        return importResultDtoResponseEntity;
+    }
+
     protected int getPort() {
         return port;
+    }
+
+    protected String getBaseUrl(){
+        return "http://localhost:" + getPort();
     }
 }
