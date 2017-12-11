@@ -40,10 +40,10 @@ public class ImportServiceImpl implements ImportService {
     private PersonDataConverter personDataConverter;
 
     @Override
-    public void importData(final ImportData importData) throws ImportException {
+    public ImportResultData importData(final ImportData importData) throws ImportException {
         validateImportData(importData);
         try {
-            doImportData(importData);
+            return doImportData(importData);
         } catch (Converter.ConversionException e) {
             throw new ImportException(e);
         }
@@ -57,7 +57,7 @@ public class ImportServiceImpl implements ImportService {
     }
 
     @Transactional
-    private void doImportData(final ImportData importData) throws Converter.ConversionException {
+    private ImportResultData doImportData(final ImportData importData) throws Converter.ConversionException {
         //Remove current data
         personRepository.deleteAllInBatch();
         roomRepository.deleteAllInBatch();
@@ -81,5 +81,10 @@ public class ImportServiceImpl implements ImportService {
         //Insert new items
         roomRepository.save(roomList);
         personRepository.save(personList);
+
+        return ImportResultData.builder()
+                .rooms(roomList.size())
+                .persons(personList.size())
+                .build();
     }
 }

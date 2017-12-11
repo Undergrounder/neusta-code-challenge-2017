@@ -5,6 +5,7 @@ import de.neusta_sd.roomsmanager.core.entities.Room;
 import de.neusta_sd.roomsmanager.core.services.PersonsService;
 import de.neusta_sd.roomsmanager.core.services.RoomsService;
 import de.neusta_sd.roomsmanager.facades.ImportFacade;
+import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
 import de.neusta_sd.roomsmanager.fatjar.FatJarApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,11 +48,15 @@ public class ImportApiControllerIntegrationTest {
     @Test
     public void testEmptyFile() throws IOException {
         //Test
-        final ResponseEntity<ImportFacade.PostImportResultData> responseEntity = postResource("/imports/empty.csv");
+        final ResponseEntity<ImportResultDto> responseEntity = postResource("/imports/empty.csv");
 
         //Verify
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
+
+        final ImportResultDto importResultDto = responseEntity.getBody();
+        assertNotNull(importResultDto);
+        assertEquals(0, importResultDto.getRooms());
+        assertEquals(0, importResultDto.getPersons());
 
         //Verify database
         final List<Room> roomList = roomsService.findAll();
@@ -66,11 +71,15 @@ public class ImportApiControllerIntegrationTest {
     @Test
     public void testExampleFile() throws IOException {
         //Test
-        final ResponseEntity<ImportFacade.PostImportResultData> responseEntity = postResource("/imports/sitzplan.csv");
+        final ResponseEntity<ImportResultDto> responseEntity = postResource("/imports/sitzplan.csv");
 
         //Verify
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
+
+        final ImportResultDto importResultDto = responseEntity.getBody();
+        assertNotNull(importResultDto);
+        assertEquals(15, importResultDto.getRooms());
+        assertEquals(49, importResultDto.getPersons());
 
         //Verify database
         final List<Room> roomList = roomsService.findAll();
@@ -82,7 +91,7 @@ public class ImportApiControllerIntegrationTest {
         assertEquals(49, personList.size());
     }
 
-    private ResponseEntity<ImportFacade.PostImportResultData> postResource(final String path) {
+    private ResponseEntity<ImportResultDto> postResource(final String path) {
         final MultiValueMap<String, Object> multipartRequest = new LinkedMultiValueMap<>();
 
         final HttpHeaders header = new HttpHeaders();
@@ -98,6 +107,6 @@ public class ImportApiControllerIntegrationTest {
 
         final HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(multipartRequest, header);
         final RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity("http://localhost:" + port + "/api/import", requestEntity, ImportFacade.PostImportResultData.class);
+        return restTemplate.postForEntity("http://localhost:" + port + "/api/import", requestEntity, ImportResultDto.class);
     }
 }

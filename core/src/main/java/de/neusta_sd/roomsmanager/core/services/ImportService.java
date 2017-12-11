@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Adrian Tello on 01/12/2017.
  */
 public interface ImportService {
-    void importData(final ImportData importData) throws ImportException;
+    ImportResultData importData(final ImportData importData) throws ImportException;
 
     @Builder
     @Value
@@ -38,6 +38,13 @@ public interface ImportService {
         private String nameAddition;
         @NonNull
         private String ldapUser;
+    }
+
+    @Builder
+    @Value
+    class ImportResultData {
+        private long persons;
+        private long rooms;
     }
 
     class ImportException extends Exception {

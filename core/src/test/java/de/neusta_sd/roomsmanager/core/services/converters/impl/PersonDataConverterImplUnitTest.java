@@ -8,6 +8,7 @@ import de.neusta_sd.roomsmanager.core.services.converters.Converter;
 import de.neusta_sd.roomsmanager.core.services.converters.NameAdditionNameConverter;
 import de.neusta_sd.roomsmanager.core.services.converters.PersonDataConverter;
 import de.neusta_sd.roomsmanager.core.services.converters.TitleNameConverter;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,8 +30,12 @@ public class PersonDataConverterImplUnitTest {
     @Mock
     private TitleNameConverter titleNameConverter;
 
-    @InjectMocks
-    private PersonDataConverter personDataConverter = new PersonDataConverterImpl();
+    private PersonDataConverter personDataConverter;
+
+    @Before
+    public void setUp() throws Exception {
+        personDataConverter = new PersonDataConverterImpl(nameAdditionNameConverter, titleNameConverter);
+    }
 
     @Test
     public void testConvertAllFields() throws Converter.ConversionException {
