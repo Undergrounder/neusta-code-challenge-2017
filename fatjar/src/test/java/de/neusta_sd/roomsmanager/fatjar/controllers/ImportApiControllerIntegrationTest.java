@@ -31,13 +31,8 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by Adrian Tello on 09/12/2017.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = FatJarApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(classes = FatJarApplication.class)
-public class ImportApiControllerIntegrationTest {
 
-    @LocalServerPort
-    private int port;
+public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTest{
 
     @Autowired
     private RoomsService roomsService;
@@ -71,7 +66,7 @@ public class ImportApiControllerIntegrationTest {
     @Test
     public void testExampleFile() throws IOException {
         //Test
-        final ResponseEntity<ImportResultDto> responseEntity = postResource("/imports/sitzplan.csv");
+        final ResponseEntity<ImportResultDto> responseEntity = importSitzplanFile();
 
         //Verify
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
@@ -89,24 +84,5 @@ public class ImportApiControllerIntegrationTest {
         final List<Person> personList = personsService.findAll();
         assertNotNull(personList);
         assertEquals(49, personList.size());
-    }
-
-    private ResponseEntity<ImportResultDto> postResource(final String path) {
-        final MultiValueMap<String, Object> multipartRequest = new LinkedMultiValueMap<>();
-
-        final HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        final HttpHeaders fileHeader = new HttpHeaders();
-        fileHeader.setContentType(MediaType.parseMediaType("text/csv"));
-
-        final Resource resource = new ClassPathResource(path);
-        final HttpEntity<Resource> importFileEntity = new HttpEntity<>(resource, fileHeader);
-
-        multipartRequest.add("file", importFileEntity);
-
-        final HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(multipartRequest, header);
-        final RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity("http://localhost:" + port + "/api/import", requestEntity, ImportResultDto.class);
     }
 }
