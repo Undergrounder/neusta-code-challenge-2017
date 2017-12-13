@@ -5,6 +5,7 @@ import de.neusta_sd.roomsmanager.core.entities.repositories.RoomRepository;
 import de.neusta_sd.roomsmanager.core.services.RoomsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
  * Created by Adrian Tello on 05/12/2017.
  */
 @Service
+@Validated
 public class RoomsServiceImpl implements RoomsService {
 
     private final RoomRepository roomRepository;

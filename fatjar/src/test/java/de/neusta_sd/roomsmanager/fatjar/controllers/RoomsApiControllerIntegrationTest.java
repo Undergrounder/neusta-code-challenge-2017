@@ -26,6 +26,11 @@ public class RoomsApiControllerIntegrationTest extends AbstractApiIntegrationTes
         doTestException(() -> getApiRoom("1234"), HttpStatus.NOT_FOUND, 5);
     }
 
+    @Test
+    public void testInvalidRoomNumber() throws IOException {
+        doTestException(() -> getApiRoom("123"), HttpStatus.BAD_REQUEST, 6);
+    }
+
     private ResponseEntity<RoomDto> getApiRoom(final String roomNumber) {
         final RestTemplate restTemplate = new RestTemplate();
 

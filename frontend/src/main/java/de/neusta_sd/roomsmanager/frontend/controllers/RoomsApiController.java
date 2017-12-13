@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 import static de.neusta_sd.roomsmanager.frontend.controllers.RoomsApiController.BASE_PATH;
@@ -29,7 +30,7 @@ public class RoomsApiController extends AbstractApiController {
     private RoomsFacade roomsFacade;
 
     @GetMapping("/{roomNumber}")
-    public RoomDto getRoom(@PathVariable final String roomNumber) throws NotFoundException {
+    public RoomDto getRoom(@PathVariable final String roomNumber) throws NotFoundException, RoomsFacade.InvalidRoomNumberException {
         final Optional<RoomDto> roomDtoOptional = roomsFacade.findRoomByNumber(roomNumber);
         if (!roomDtoOptional.isPresent()) {
             throw new RoomNotFoundException("Room [" + roomNumber + "] not found.");
@@ -57,6 +58,8 @@ public class RoomsApiController extends AbstractApiController {
     public ResponseEntity<ExceptionDto> exceptionHandler(final Exception e) {
         if(e instanceof RoomNotFoundException){
             return createExceptionResponseEntity(404, 5, e.getMessage());
+        }else if (e instanceof RoomsFacade.InvalidRoomNumberException){
+            return createExceptionResponseEntity(400, 6, e.getMessage());
         }
 
         return super.exceptionHandler(e);

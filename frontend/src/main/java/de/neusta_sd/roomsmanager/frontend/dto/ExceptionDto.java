@@ -1,6 +1,5 @@
 package de.neusta_sd.roomsmanager.frontend.dto;
 
-import lombok.NonNull;
 import lombok.Value;
 
 /**
@@ -10,6 +9,5 @@ import lombok.Value;
 public class ExceptionDto {
     private int code;
 
-    @NonNull
     private String message;
 }

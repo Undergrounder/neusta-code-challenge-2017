@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * Created by Adrian Tello on 13/12/2017.
  */
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy=RoomNumberConstraintValidator.class)
 public @interface RoomNumberConstraint {

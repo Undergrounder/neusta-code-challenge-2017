@@ -2,6 +2,7 @@ package de.neusta_sd.roomsmanager.facades.impl;
 
 import de.neusta_sd.roomsmanager.core.entities.Room;
 import de.neusta_sd.roomsmanager.core.services.RoomsService;
+import de.neusta_sd.roomsmanager.core.services.constraints.RoomNumberConstraint;
 import de.neusta_sd.roomsmanager.facades.RoomsFacade;
 import de.neusta_sd.roomsmanager.facades.converters.RoomConverter;
 import de.neusta_sd.roomsmanager.facades.converters.RoomsConverter;
@@ -10,6 +11,7 @@ import de.neusta_sd.roomsmanager.facades.dto.RoomsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,17 +34,21 @@ public class RoomsFacadeImpl implements RoomsFacade {
     }
 
     @Override
-    public Optional<RoomDto> findRoomByNumber(final String number) {
+    public Optional<RoomDto> findRoomByNumber(final String number) throws InvalidRoomNumberException{
         Optional<RoomDto> roomDtoOptional = Optional.empty();
 
-        final Optional<Room> roomOptional = getRoomsService().findRoomByNumber(number);
-        if (roomOptional.isPresent()) {
-            final Room room = roomOptional.get();
-            final RoomDto roomDto = getRoomConverter().convert(room);
-            roomDtoOptional = Optional.of(roomDto);
-        }
+        try{
+            final Optional<Room> roomOptional = getRoomsService().findRoomByNumber(number);
+            if (roomOptional.isPresent()) {
+                final Room room = roomOptional.get();
+                final RoomDto roomDto = getRoomConverter().convert(room);
+                roomDtoOptional = Optional.of(roomDto);
+            }
 
-        return roomDtoOptional;
+            return roomDtoOptional;
+        }catch (ConstraintViolationException e){
+            throw new InvalidRoomNumberException("Invalid room number [" + number + "].");
+        }
     }
 
     @Override
