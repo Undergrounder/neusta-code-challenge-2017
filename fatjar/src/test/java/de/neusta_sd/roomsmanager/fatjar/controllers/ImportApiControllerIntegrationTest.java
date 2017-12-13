@@ -106,7 +106,28 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         assertNoPersonsInDatabase();
     }
 
+    @Test
+    public void importFileDuplicatedPerson() throws IOException {
+        try{
+            //Test
+            importSitzplanDuplicatedPersonFile();
+
+            //Verify
+            assertFalse(true); //Should never get called
+        }catch(final HttpClientErrorException clientErrorException){
+            assertEquals(HttpStatus.BAD_REQUEST, clientErrorException.getStatusCode());
+        }
+
+        //No inserts have been done
+        assertNoRoomsInDatabase();
+        assertNoPersonsInDatabase();
+    }
+
     private ResponseEntity<ImportResultDto> importSitzplanDuplicatedRoomFile(){
         return postResource("/imports/sitzplan_duplicated_room.csv");
+    }
+
+    private ResponseEntity<ImportResultDto> importSitzplanDuplicatedPersonFile(){
+        return postResource("/imports/sitzplan_duplicated_person.csv");
     }
 }

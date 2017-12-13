@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class ValidImportDataConstraintValidator implements ConstraintValidator<ValidImportDataConstraint, ImportService.ImportData> {
 
     private final static String ROOM_NUMBER_REPEATED_DEFAULT_MSG = "Room number \"{0}\" found {1} times.";
+    private final static String PERSON_REPEATED_DEFAULT_MSG ="Repeated person: {0} found {1} times.";
 
     @Override
     public void initialize(ValidImportDataConstraint constraintAnnotation) {
@@ -28,9 +29,10 @@ public class ValidImportDataConstraintValidator implements ConstraintValidator<V
 
         final List<ImportService.RoomData> roomDataList = value.getRoomDataList();
 
-        boolean hasUniqueRoomNumbers = validateUniqueRoomNumber(roomDataList, context);
+        final boolean hasUniqueRoomNumbers = validateUniqueRoomNumber(roomDataList, context);
+        final boolean hasNoRepeatedPersons = hasNoRepeatedPersons(roomDataList, context);
 
-        return hasUniqueRoomNumbers;
+        return hasUniqueRoomNumbers && hasNoRepeatedPersons;
     }
 
     private boolean validateUniqueRoomNumber(final List<ImportService.RoomData> roomDataList, final ConstraintValidatorContext context) {
@@ -50,6 +52,35 @@ public class ValidImportDataConstraintValidator implements ConstraintValidator<V
 
                 final MessageFormat messageFormat = new MessageFormat(ROOM_NUMBER_REPEATED_DEFAULT_MSG);
                 final String message = messageFormat.format(new Object[]{number, count});
+
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+            }
+        }
+
+        return isValid;
+    }
+
+    private boolean hasNoRepeatedPersons(final List<ImportService.RoomData> roomDataList, final ConstraintValidatorContext context)
+    {
+        boolean isValid = true;
+
+        final Map<ImportService.PersonData, Long> numbersCount = roomDataList.stream()
+            .flatMap(roomData -> roomData.getPersonDataList().stream())
+            .collect(
+                Collectors.groupingBy(Function.identity(), Collectors.counting())
+        );
+
+        for(Map.Entry<ImportService.PersonData, Long> personDataCountEntry: numbersCount.entrySet()){
+            final Long count = personDataCountEntry.getValue();
+
+            if(count > 1){
+                final ImportService.PersonData personData = personDataCountEntry.getKey();
+
+                isValid = false;
+
+                final MessageFormat messageFormat = new MessageFormat(PERSON_REPEATED_DEFAULT_MSG);
+                final String message = messageFormat.format(new Object[]{personData, count});
 
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
