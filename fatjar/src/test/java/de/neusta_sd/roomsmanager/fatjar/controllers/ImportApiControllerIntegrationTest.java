@@ -85,4 +85,10 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         assertNotNull(personList);
         assertEquals(49, personList.size());
     }
+
+    @Test
+    public void importChain() throws IOException {
+        testExampleFile();
+        testEmptyFile();
+    }
 }
