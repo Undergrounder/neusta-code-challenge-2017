@@ -5,9 +5,11 @@ import de.neusta_sd.roomsmanager.facades.dto.RoomDto;
 import de.neusta_sd.roomsmanager.facades.dto.RoomsDto;
 import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowedException;
 import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
+import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.RoomNotFoundException;
 import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -30,7 +32,7 @@ public class RoomsApiController extends AbstractApiController {
     public RoomDto getRoom(@PathVariable final String roomNumber) throws NotFoundException {
         final Optional<RoomDto> roomDtoOptional = roomsFacade.findRoomByNumber(roomNumber);
         if (!roomDtoOptional.isPresent()) {
-            throw new NotFoundException("Room [" + roomNumber + "] not found.");
+            throw new RoomNotFoundException("Room [" + roomNumber + "] not found.");
         }
 
         return roomDtoOptional.get();
@@ -49,5 +51,14 @@ public class RoomsApiController extends AbstractApiController {
     @RequestMapping
     public void othersRooms() throws MethodNotAllowedException {
         throw new MethodNotAllowedException();
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<ExceptionDto> exceptionHandler(final Exception e) {
+        if(e instanceof RoomNotFoundException){
+            return createExceptionResponseEntity(404, 5, e.getMessage());
+        }
+
+        return super.exceptionHandler(e);
     }
 }

@@ -27,15 +27,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTest{
 
-    @Autowired
-    private RoomsService roomsService;
-
-    @Autowired
-    private PersonsService personsService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     public void testEmptyFile() throws IOException {
         //Test
@@ -54,18 +45,6 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         assertNoPersonsInDatabase();
     }
 
-    private void assertNoRoomsInDatabase() {
-        final List<Room> roomList = roomsService.findAll();
-        assertNotNull(roomList);
-        assertEquals(0, roomList.size());
-    }
-
-    private void assertNoPersonsInDatabase() {
-        final List<Person> personList = personsService.findAll();
-        assertNotNull(personList);
-        assertEquals(0, personList.size());
-    }
-
     @Test
     public void testExampleFile() throws IOException {
         //Test
@@ -80,11 +59,11 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         assertEquals(49, importResultDto.getPersons());
 
         //Verify database
-        final List<Room> roomList = roomsService.findAll();
+        final List<Room> roomList = getRoomsService().findAll();
         assertNotNull(roomList);
         assertEquals(15, roomList.size());
 
-        final List<Person> personList = personsService.findAll();
+        final List<Person> personList = getPersonsService().findAll();
         assertNotNull(personList);
         assertEquals(49, personList.size());
     }
@@ -115,27 +94,8 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         doTestInvalidMethod("/api/import");
     }
 
-    public void doTestValidationFailed(Supplier<ResponseEntity<ImportResultDto>> supplier, int expectedBodyCode) throws IOException {
-        try {
-            //Test
-            supplier.get();
-
-            //Verify
-            assertFalse(true); //Should never get called
-        } catch(final HttpClientErrorException clientErrorException){
-            assertEquals(HttpStatus.BAD_REQUEST, clientErrorException.getStatusCode());
-
-            final byte[] responseBody = clientErrorException.getResponseBodyAsByteArray();
-            final ExceptionDto exceptionDto = objectMapper.readValue(responseBody, ExceptionDto.class);
-
-            assertNotNull(exceptionDto);
-            assertEquals(expectedBodyCode, exceptionDto.getCode());
-            assertNotNull(exceptionDto.getMessage());
-        }
-
-        //No inserts have been done
-        assertNoRoomsInDatabase();
-        assertNoPersonsInDatabase();
+    protected void doTestValidationFailed(Runnable runnable, int expectedBodyCode) throws IOException {
+        doTestException(runnable, HttpStatus.BAD_REQUEST, expectedBodyCode);
     }
 
     private ResponseEntity<ImportResultDto> importSitzplanDuplicatedRoomFile(){

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,16 +22,8 @@ import static org.junit.Assert.assertTrue;
 public class RoomsApiControllerIntegrationTest extends AbstractApiIntegrationTest{
 
     @Test
-    public void testEmpty(){
-        //Test
-        try{
-            getApiRoom("1234");
-
-            //Verify
-            assertTrue(false); //Should never be called!
-        }catch (final HttpClientErrorException e){
-            assertEquals(HttpStatus.NOT_FOUND, e.getStatusCode());
-        }
+    public void testEmpty() throws IOException {
+        doTestException(() -> getApiRoom("1234"), HttpStatus.NOT_FOUND, 5);
     }
 
     private ResponseEntity<RoomDto> getApiRoom(final String roomNumber) {
