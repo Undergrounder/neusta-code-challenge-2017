@@ -40,7 +40,8 @@ public class ImportServiceImpl implements ImportService {
     private PersonDataConverter personDataConverter;
 
     @Override
-    public ImportResultData importData(final ImportData importData) throws ImportException {
+    @Transactional
+    public synchronized ImportResultData importData(final ImportData importData) throws ImportException {
         validateImportData(importData);
         try {
             return doImportData(importData);
@@ -56,7 +57,6 @@ public class ImportServiceImpl implements ImportService {
         }
     }
 
-    @Transactional
     private ImportResultData doImportData(final ImportData importData) throws Converter.ConversionException {
         //Remove current data
         personRepository.deleteAllInBatch();
