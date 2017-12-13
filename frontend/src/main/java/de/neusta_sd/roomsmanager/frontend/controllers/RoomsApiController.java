@@ -2,6 +2,7 @@ package de.neusta_sd.roomsmanager.frontend.controllers;
 
 import de.neusta_sd.roomsmanager.facades.RoomsFacade;
 import de.neusta_sd.roomsmanager.facades.dto.RoomDto;
+import de.neusta_sd.roomsmanager.facades.dto.RoomsDto;
 import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,10 @@ public class RoomsApiController extends AbstractApiController {
         }
 
         return roomDtoOptional.get();
+    }
+
+    @GetMapping
+    public RoomsDto getRooms() throws NotFoundException {
+        return roomsFacade.findRooms();
     }
 }

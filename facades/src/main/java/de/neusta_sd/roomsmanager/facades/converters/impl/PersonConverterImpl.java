@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class PersonConverterImpl implements PersonConverter {
     @Override
     public PersonDto convert(final Person source) throws ConversionException {
-        PersonDto.PersonDtoBuilder builder =  PersonDto.builder()
+        final PersonDto.PersonDtoBuilder builder =  PersonDto.builder()
                 .firstName(source.getFirstName())
                 .lastName(source.getLastName())
                 .ldapuser(source.getLdapUser());

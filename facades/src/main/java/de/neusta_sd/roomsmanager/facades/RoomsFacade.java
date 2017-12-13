@@ -1,6 +1,7 @@
 package de.neusta_sd.roomsmanager.facades;
 
 import de.neusta_sd.roomsmanager.facades.dto.RoomDto;
+import de.neusta_sd.roomsmanager.facades.dto.RoomsDto;
 
 import java.util.Optional;
 
@@ -9,4 +10,6 @@ import java.util.Optional;
  */
 public interface RoomsFacade {
     Optional<RoomDto> findRoomByNumber(final String number);
+
+    RoomsDto findRooms();
 }

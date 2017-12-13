@@ -30,6 +30,10 @@ public class RoomConverterImpl implements RoomConverter {
         final String roomNumber = source.getNumber();
         final List<Person> people = source.getPeople();
         final List<PersonDto> convertedPeople = ConverterUtils.convertAll(people, personConverter);
-        return new RoomDto(roomNumber, convertedPeople);
+
+        return RoomDto.builder()
+                .room(roomNumber)
+                .people(convertedPeople)
+                .build();
     }
 }

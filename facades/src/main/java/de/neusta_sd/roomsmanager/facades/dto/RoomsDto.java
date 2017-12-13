@@ -8,15 +8,13 @@ import lombok.Value;
 import java.util.List;
 
 /**
- * Created by Adrian Tello on 05/12/2017.
+ * Created by Adrian Tello on 11/12/2017.
  */
 @Builder
 @Value
-public class RoomDto {
-    @NonNull
-    private String room;
+public class RoomsDto {
 
     @NonNull
-    @Singular("person")
-    private List<PersonDto> people;
+    @Singular
+    private List<RoomDto> rooms;
 }
