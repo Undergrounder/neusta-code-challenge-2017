@@ -34,11 +34,15 @@ public abstract class AbstractApiController {
         }
     }
 
-    private ResponseEntity<ExceptionDto> createExceptionResponseEntity(int code, String message){
-        final ExceptionDto exceptionDto = new ExceptionDto(code, message);
+    protected ResponseEntity<ExceptionDto> createExceptionResponseEntity(int responseCode, String message){
+        return createExceptionResponseEntity(responseCode, responseCode, message);
+    }
+
+    protected ResponseEntity<ExceptionDto> createExceptionResponseEntity(int responseCode, int bodyCode, String message){
+        final ExceptionDto exceptionDto = new ExceptionDto(bodyCode, message);
 
         return ResponseEntity
-                .status(code)
+                .status(responseCode)
                 .body(exceptionDto);
     }
 }

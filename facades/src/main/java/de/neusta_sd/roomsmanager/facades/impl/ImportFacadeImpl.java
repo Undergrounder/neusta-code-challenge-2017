@@ -1,6 +1,8 @@
 package de.neusta_sd.roomsmanager.facades.impl;
 
 import de.neusta_sd.roomsmanager.core.services.ImportService;
+import de.neusta_sd.roomsmanager.core.services.constraints.RoomNumberConstraint;
+import de.neusta_sd.roomsmanager.core.services.constraints.ValidImportDataConstraint;
 import de.neusta_sd.roomsmanager.facades.ImportFacade;
 import de.neusta_sd.roomsmanager.facades.converters.ImportResultDataConverter;
 import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
@@ -9,7 +11,16 @@ import de.neusta_sd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Path;
+import javax.validation.metadata.ConstraintDescriptor;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Adrian Tello on 09/12/2017.
@@ -55,10 +66,39 @@ public class ImportFacadeImpl implements ImportFacade {
         try {
             return getImportService().importData(importData);
         }catch (ImportService.InvalidImportDataException e){
-            throw new ImportValidationFailedException("Validation failed", e);
+            final ImportValidationFailedException.FailedValidation failedValidation = mapInvalidImportData(e.getConstraintViolations());
+            throw new ImportValidationFailedException("Validation failed", e, failedValidation);
         } catch (ImportService.ImportException e) {
             throw new ImportException("Error happened while importing data", e);
         }
+    }
+
+    private ImportValidationFailedException.FailedValidation mapInvalidImportData(final Collection<ConstraintViolation<ImportService.ImportData>> constraintViolations){
+        ImportValidationFailedException.FailedValidation failedValidation = ImportValidationFailedException.FailedValidation.OTHER;
+
+        for(ConstraintViolation<ImportService.ImportData> constraintViolation: constraintViolations){
+            ConstraintDescriptor<? extends Annotation> constraintDescriptor = constraintViolation.getConstraintDescriptor();
+
+            final Annotation annotation = constraintDescriptor.getAnnotation();
+
+            if(annotation instanceof ValidImportDataConstraint){
+                final Path propertyPath = constraintViolation.getPropertyPath();
+                final List<Path.Node> propertyPaths = StreamSupport.stream(propertyPath.spliterator(), false).collect(Collectors.toList());
+                final Path.Node lastNode = propertyPaths.get(propertyPaths.size() - 1);
+                if("number".equals(lastNode.getName())){
+                    failedValidation = ImportValidationFailedException.FailedValidation.DUPLICATED_ROOM_NUMBER;
+                    break;
+                }else{
+                    failedValidation = ImportValidationFailedException.FailedValidation.DUPLICATED_PERSON;
+                }
+
+            }else if(annotation instanceof RoomNumberConstraint){
+               failedValidation = ImportValidationFailedException.FailedValidation.INVALID_ENTRY;
+                break;
+            }
+        }
+
+        return failedValidation;
     }
 
     private ImportCsvParser getImportCsvParser() {

@@ -1,10 +1,12 @@
 package de.neusta_sd.roomsmanager.fatjar.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neusta_sd.roomsmanager.core.entities.Person;
 import de.neusta_sd.roomsmanager.core.entities.Room;
 import de.neusta_sd.roomsmanager.core.services.PersonsService;
 import de.neusta_sd.roomsmanager.core.services.RoomsService;
 import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
+import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -30,6 +32,9 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
 
     @Autowired
     private PersonsService personsService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void testEmptyFile() throws IOException {
@@ -92,17 +97,17 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
 
     @Test
     public void importFileDuplicatedPerson() throws IOException {
-        doTestValidationFailed(this::importSitzplanDuplicatedPersonFile);
+        doTestValidationFailed(this::importSitzplanDuplicatedPersonFile, 3);
     }
 
     @Test
     public void testImportFileDuplicatedRoom() throws IOException {
-        doTestValidationFailed(this::importSitzplanDuplicatedRoomFile);
+        doTestValidationFailed(this::importSitzplanDuplicatedRoomFile, 2);
     }
 
     @Test
     public void testImportFileInvalidRoomNumber() throws IOException {
-        doTestValidationFailed(this::importSitzplanInvalidRoomNumberFile);
+        doTestValidationFailed(this::importSitzplanInvalidRoomNumberFile, 4);
     }
 
     @Test
@@ -110,7 +115,7 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         doTestInvalidMethod("/api/import");
     }
 
-    public void doTestValidationFailed(Supplier<ResponseEntity<ImportResultDto>> supplier) throws IOException {
+    public void doTestValidationFailed(Supplier<ResponseEntity<ImportResultDto>> supplier, int expectedBodyCode) throws IOException {
         try {
             //Test
             supplier.get();
@@ -119,6 +124,13 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
             assertFalse(true); //Should never get called
         } catch(final HttpClientErrorException clientErrorException){
             assertEquals(HttpStatus.BAD_REQUEST, clientErrorException.getStatusCode());
+
+            final byte[] responseBody = clientErrorException.getResponseBodyAsByteArray();
+            final ExceptionDto exceptionDto = objectMapper.readValue(responseBody, ExceptionDto.class);
+
+            assertNotNull(exceptionDto);
+            assertEquals(expectedBodyCode, exceptionDto.getCode());
+            assertNotNull(exceptionDto.getMessage());
         }
 
         //No inserts have been done

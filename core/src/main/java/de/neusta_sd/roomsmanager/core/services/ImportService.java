@@ -79,8 +79,12 @@ public interface ImportService {
     }
 
     class InvalidImportDataException extends ImportException {
+        private final Collection<ConstraintViolation<ImportData>> constraintViolations;
+
         public InvalidImportDataException(final Collection<ConstraintViolation<ImportData>> constraintViolations) {
             super(buildMessage(constraintViolations));
+
+            this.constraintViolations = constraintViolations;
         }
 
         private static String buildMessage(final Collection<ConstraintViolation<ImportData>> constraintViolations) {
@@ -91,6 +95,10 @@ public interface ImportService {
             }
 
             return messageBuilder.toString();
+        }
+
+        public Collection<ConstraintViolation<ImportData>> getConstraintViolations() {
+            return constraintViolations;
         }
     }
 }

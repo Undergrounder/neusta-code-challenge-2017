@@ -19,8 +19,22 @@ public interface ImportFacade {
     }
 
     class ImportValidationFailedException extends ImportException{
-        public ImportValidationFailedException(String message, Throwable cause) {
+        public enum FailedValidation{
+            DUPLICATED_ROOM_NUMBER,
+            DUPLICATED_PERSON,
+            INVALID_ENTRY,
+            OTHER;
+        }
+
+        private final FailedValidation failedValidation;
+
+        public ImportValidationFailedException(String message, Throwable cause, final FailedValidation failedValidation) {
             super(message, cause);
+            this.failedValidation = failedValidation;
+        }
+
+        public FailedValidation getFailedValidation() {
+            return failedValidation;
         }
     }
 }

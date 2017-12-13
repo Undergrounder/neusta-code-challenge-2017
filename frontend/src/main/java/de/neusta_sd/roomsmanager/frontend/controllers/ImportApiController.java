@@ -44,12 +44,27 @@ public class ImportApiController extends AbstractApiController {
     }
 
     @ExceptionHandler(value = {ImportFacade.ImportValidationFailedException.class})
-    public ResponseEntity<ExceptionDto> importValidationFailedHandler(final Exception e) {
-        final ExceptionDto exceptionDto = new ExceptionDto(400, e.getMessage());
+    public ResponseEntity<ExceptionDto> importValidationFailedHandler(final ImportFacade.ImportValidationFailedException e) {
 
-        return ResponseEntity
-                .status(exceptionDto.getCode())
-                .body(exceptionDto);
+        final int bodyCode = getBodyCodeForException(e);
+        return createExceptionResponseEntity(400, bodyCode, e.getMessage());
+    }
+
+    private int getBodyCodeForException(ImportFacade.ImportValidationFailedException e){
+        int code = 400;
+        switch (e.getFailedValidation()){
+            case DUPLICATED_ROOM_NUMBER:
+                code = 2;
+                break;
+            case DUPLICATED_PERSON:
+                code = 3;
+                break;
+            case INVALID_ENTRY:
+                code = 4;
+                break;
+        }
+
+        return code;
     }
 
     private ImportFacade getImportFacade() {
