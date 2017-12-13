@@ -12,6 +12,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -90,31 +91,28 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
     }
 
     @Test
-    public void importFileDuplicatedRooms() throws IOException {
-        try{
-            //Test
-            importSitzplanDuplicatedRoomFile();
-
-            //Verify
-            assertFalse(true); //Should never get called
-        }catch(final HttpClientErrorException clientErrorException){
-            assertEquals(HttpStatus.BAD_REQUEST, clientErrorException.getStatusCode());
-        }
-
-        //No inserts have been done
-        assertNoRoomsInDatabase();
-        assertNoPersonsInDatabase();
+    public void importFileDuplicatedPerson() throws IOException {
+        doTestValidationFailed(this::importSitzplanDuplicatedPersonFile);
     }
 
     @Test
-    public void importFileDuplicatedPerson() throws IOException {
-        try{
+    public void testImportFileDuplicatedRoom() throws IOException {
+        doTestValidationFailed(this::importSitzplanDuplicatedRoomFile);
+    }
+
+    @Test
+    public void testImportFileInvalidRoomNumber() throws IOException {
+        doTestValidationFailed(this::importSitzplanInvalidRoomNumberFile);
+    }
+
+    public void doTestValidationFailed(Supplier<ResponseEntity<ImportResultDto>> supplier) throws IOException {
+        try {
             //Test
-            importSitzplanDuplicatedPersonFile();
+            supplier.get();
 
             //Verify
             assertFalse(true); //Should never get called
-        }catch(final HttpClientErrorException clientErrorException){
+        } catch(final HttpClientErrorException clientErrorException){
             assertEquals(HttpStatus.BAD_REQUEST, clientErrorException.getStatusCode());
         }
 
@@ -129,5 +127,9 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
 
     private ResponseEntity<ImportResultDto> importSitzplanDuplicatedPersonFile(){
         return postResource("/imports/sitzplan_duplicated_person.csv");
+    }
+
+    private ResponseEntity<ImportResultDto> importSitzplanInvalidRoomNumberFile(){
+        return postResource("/imports/sitzplan_invalid_room_number.csv");
     }
 }
