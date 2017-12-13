@@ -2,8 +2,10 @@ package de.neusta_sd.roomsmanager.frontend.controllers;
 
 import de.neusta_sd.roomsmanager.facades.ImportFacade;
 import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
+import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +35,15 @@ public class ImportApiController extends AbstractApiController {
         try (InputStream fileInputStream = file.getInputStream()) {
             return getImportFacade().importStream(fileInputStream);
         }
+    }
+
+    @ExceptionHandler(value = {ImportFacade.ImportValidationFailedException.class})
+    public ResponseEntity<ExceptionDto> importValidationFailedHandler(final Exception e) {
+        final ExceptionDto exceptionDto = new ExceptionDto(400, e.getMessage());
+
+        return ResponseEntity
+                .status(exceptionDto.getCode())
+                .body(exceptionDto);
     }
 
     private ImportFacade getImportFacade() {

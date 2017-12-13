@@ -17,4 +17,10 @@ public interface ImportFacade {
             super(message, cause);
         }
     }
+
+    class ImportValidationFailedException extends ImportException{
+        public ImportValidationFailedException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 }

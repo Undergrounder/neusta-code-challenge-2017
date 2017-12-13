@@ -1,7 +1,9 @@
 package de.neusta_sd.roomsmanager.core.services;
 
+import de.neusta_sd.roomsmanager.core.services.constraints.ValidImportDataConstraint;
 import lombok.Builder;
 import lombok.NonNull;
+import lombok.Singular;
 import lombok.Value;
 
 import javax.validation.ConstraintViolation;
@@ -17,7 +19,10 @@ public interface ImportService {
 
     @Builder
     @Value
+    @ValidImportDataConstraint
     class ImportData {
+        @Singular("roomData")
+        @NonNull
         private List<RoomData> roomDataList;
     }
 

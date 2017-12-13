@@ -54,6 +54,8 @@ public class ImportFacadeImpl implements ImportFacade {
     private ImportService.ImportResultData doImport(ImportService.ImportData importData) throws ImportException {
         try {
             return getImportService().importData(importData);
+        }catch (ImportService.InvalidImportDataException e){
+            throw new ImportValidationFailedException("Validation failed", e);
         } catch (ImportService.ImportException e) {
             throw new ImportException("Error happened while importing data", e);
         }
