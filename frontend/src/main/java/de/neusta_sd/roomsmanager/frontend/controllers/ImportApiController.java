@@ -2,6 +2,7 @@ package de.neusta_sd.roomsmanager.frontend.controllers;
 
 import de.neusta_sd.roomsmanager.facades.ImportFacade;
 import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
+import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowedException;
 import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +36,11 @@ public class ImportApiController extends AbstractApiController {
         try (InputStream fileInputStream = file.getInputStream()) {
             return getImportFacade().importStream(fileInputStream);
         }
+    }
+
+    @RequestMapping
+    public void othersImport() throws MethodNotAllowedException {
+        throw new MethodNotAllowedException();
     }
 
     @ExceptionHandler(value = {ImportFacade.ImportValidationFailedException.class})

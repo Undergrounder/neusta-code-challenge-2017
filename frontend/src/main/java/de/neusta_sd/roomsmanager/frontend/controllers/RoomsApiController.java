@@ -3,12 +3,12 @@ package de.neusta_sd.roomsmanager.frontend.controllers;
 import de.neusta_sd.roomsmanager.facades.RoomsFacade;
 import de.neusta_sd.roomsmanager.facades.dto.RoomDto;
 import de.neusta_sd.roomsmanager.facades.dto.RoomsDto;
+import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowedException;
 import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
+import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -36,8 +36,18 @@ public class RoomsApiController extends AbstractApiController {
         return roomDtoOptional.get();
     }
 
+    @RequestMapping("/{roomNumber}")
+    public void othersRoom(@PathVariable final String roomNumber) throws NotFoundException, MethodNotAllowedException {
+        throw new MethodNotAllowedException();
+    }
+
     @GetMapping
     public RoomsDto getRooms() throws NotFoundException {
         return roomsFacade.findRooms();
+    }
+
+    @RequestMapping
+    public void othersRooms() throws MethodNotAllowedException {
+        throw new MethodNotAllowedException();
     }
 }

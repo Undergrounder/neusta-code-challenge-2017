@@ -105,6 +105,11 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
         doTestValidationFailed(this::importSitzplanInvalidRoomNumberFile);
     }
 
+    @Test
+    public void testInvalidMethod(){
+        doTestInvalidMethod("/api/import");
+    }
+
     public void doTestValidationFailed(Supplier<ResponseEntity<ImportResultDto>> supplier) throws IOException {
         try {
             //Test

@@ -1,6 +1,7 @@
 package de.neusta_sd.roomsmanager.fatjar.controllers;
 
 import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
+import de.neusta_sd.roomsmanager.facades.dto.RoomDto;
 import de.neusta_sd.roomsmanager.fatjar.FatJarApplication;
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.embedded.LocalServerPort;
@@ -12,10 +13,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Adrian Tello on 11/12/2017.
@@ -72,5 +77,19 @@ public abstract class AbstractApiIntegrationTest {
 
     protected String getBaseUrl(){
         return "http://localhost:" + getPort();
+    }
+
+    protected void doTestInvalidMethod(String url){
+        //Prepare
+        final RestTemplate restTemplate = new RestTemplate();
+        try{
+            //Test
+            restTemplate.postForEntity(getBaseUrl() + url, null, RoomDto.class, Collections.emptyMap());
+
+            //Verify
+            assertTrue(false); //Should never be called
+        }catch (HttpClientErrorException e){
+            assertEquals(HttpStatus.METHOD_NOT_ALLOWED, e.getStatusCode());
+        }
     }
 }

@@ -1,17 +1,10 @@
 package de.neusta_sd.roomsmanager.fatjar.controllers;
 
-import de.neusta_sd.roomsmanager.core.entities.Person;
-import de.neusta_sd.roomsmanager.facades.dto.ImportResultDto;
 import de.neusta_sd.roomsmanager.facades.dto.PersonDto;
 import de.neusta_sd.roomsmanager.facades.dto.RoomDto;
-import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.junit.Test;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -45,6 +37,16 @@ public class RoomsApiControllerIntegrationTest extends AbstractApiIntegrationTes
         final RestTemplate restTemplate = new RestTemplate();
 
         return restTemplate.getForEntity( getBaseUrl() + "/api/room/" + roomNumber, RoomDto.class);
+    }
+
+    @Test
+    public void testInvalidMethod() {
+        doTestInvalidMethod("/api/room/1107");
+    }
+
+    @Test
+    public void testInvalidRoomsMethod() {
+        doTestInvalidMethod("/api/room");
     }
 
     @Test

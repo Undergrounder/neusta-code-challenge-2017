@@ -1,5 +1,6 @@
 package de.neusta_sd.roomsmanager.frontend.controllers;
 
+import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowedException;
 import de.neusta_sd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
 import de.neusta_sd.roomsmanager.frontend.dto.ExceptionDto;
 import org.apache.log4j.LogManager;
@@ -18,23 +19,26 @@ public abstract class AbstractApiController {
     private final Logger LOG = LogManager.getLogger(AbstractApiController.class);
 
     private final static String NOT_FOUND_MESSAGE = "Not Found";
+    private final static String METHOD_NOT_ALLOWED_MESSAGE = "Method not allowed";
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ExceptionDto> exceptionHandler(final Exception e) {
         LOG.error(e.getMessage(), e);
 
-        final ExceptionDto exceptionDto = handleException(e);
-
-        return ResponseEntity
-                .status(exceptionDto.getCode())
-                .body(exceptionDto);
+        if (e instanceof NoHandlerFoundException || e instanceof NotFoundException) {
+            return createExceptionResponseEntity(404, NOT_FOUND_MESSAGE);
+        } else if(e instanceof MethodNotAllowedException) {
+            return createExceptionResponseEntity(405, METHOD_NOT_ALLOWED_MESSAGE);
+        }else{
+            return createExceptionResponseEntity(500, e.getMessage());
+        }
     }
 
-    private ExceptionDto handleException(final Exception e){
-        if (e instanceof NoHandlerFoundException || e instanceof NotFoundException) {
-            return new ExceptionDto(404, NOT_FOUND_MESSAGE);
-        } else {
-            return new ExceptionDto(500, e.getMessage());
-        }
+    private ResponseEntity<ExceptionDto> createExceptionResponseEntity(int code, String message){
+        final ExceptionDto exceptionDto = new ExceptionDto(code, message);
+
+        return ResponseEntity
+                .status(code)
+                .body(exceptionDto);
     }
 }
