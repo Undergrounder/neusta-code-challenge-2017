@@ -34,6 +34,10 @@ Fat-Jar-Datei ausführen.
 java -jar roomsmanager-fatjar-1.0-SNAPSHOT.jar
 ```
 
+### War
+War-Datei in Tomcat deployen.  
+https://tomcat.apache.org/tomcat-8.0-doc/html-manager-howto.html#Deploy
+
 ## Entwicklung
 ### Java Dokumentation
 Zum Erzeugen der Dokumentation muss folgendes Befehl ausgeführt werden:
@@ -47,10 +51,6 @@ Die generierte Java-Dokumentation kann in diesen Verzeichnissen gefunden werden:
 * /frontend/build/docs/javadoc
 * /fatjar/build/docs/javadoc
 * /war/build/docs/javadoc
-
-### War
-War-Datei in Tomcat deployen.  
-https://tomcat.apache.org/tomcat-8.0-doc/html-manager-howto.html#Deploy
 
 ## Versionierung
 Wir benutzen [SemVer](https://semver.org/) für die Versionierung.
