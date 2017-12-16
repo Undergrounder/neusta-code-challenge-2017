@@ -42,6 +42,24 @@ public class PersonStringConverterImplUnitTest {
         personStringConverter.convert(null);
     }
 
+    @Test(expected = Converter.ConversionException.class)
+    public void testConvertInvalid1() {
+        // Test
+        personStringConverter.convert("Adrian");
+    }
+
+    @Test(expected = Converter.ConversionException.class)
+    public void testConvertInvalid1b() {
+        // Test
+        personStringConverter.convert("Adrian (alasheras)");
+    }
+
+    @Test(expected = Converter.ConversionException.class)
+    public void testConvertInvalid2() {
+        // Test
+        personStringConverter.convert("Adrian Tello");
+    }
+
     @Test
     public void testConvertDennisFischer() {
         // Prepare
