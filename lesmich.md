@@ -23,16 +23,8 @@ core <- facades <- frontend <-|
 Die Anforderungen des Projektes werden mit Integrationtests getestet.  
 Um Bugs zu vermeiden und die Entwicklung schneller zu machen, benutzten wir auch Unit-Tests.
 
-Die Tests können so ausgeführt werden:
-
-###Windows
 ```
 gradlew test
-```
-
-###Unix / Linux / MacOs
-```
-./gradlew test
 ```
 
 ## Deployment
@@ -41,6 +33,20 @@ Fat-Jar-Datei ausführen.
 ```
 java -jar roomsmanager-fatjar-1.0-SNAPSHOT.jar
 ```
+
+## Entwicklung
+### Java Dokumentation
+Zum Erzeugen der Dokumentation muss folgendes Befehl ausgeführt werden:
+```
+gradlew javadoc
+```
+
+Die generierte Java-Dokumentation kann in diesen Verzeichnissen gefunden werden:
+* /core/build/docs/javadoc
+* /facades/build/docs/javadoc
+* /frontend/build/docs/javadoc
+* /fatjar/build/docs/javadoc
+* /war/build/docs/javadoc
 
 ### War
 War-Datei in Tomcat deployen.  
