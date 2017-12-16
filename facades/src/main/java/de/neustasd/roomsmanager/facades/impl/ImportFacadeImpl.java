@@ -1,8 +1,11 @@
 package de.neustasd.roomsmanager.facades.impl;
 
+import static de.neustasd.roomsmanager.facades.ImportFacade.ImportValidationFailedException.FailedValidation.INVALID_FILE;
+
 import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.constraints.RoomNumberConstraint;
 import de.neustasd.roomsmanager.core.services.constraints.ValidImportDataConstraint;
+import de.neustasd.roomsmanager.core.services.converters.Converter;
 import de.neustasd.roomsmanager.core.services.data.ImportData;
 import de.neustasd.roomsmanager.core.services.data.ImportResultData;
 import de.neustasd.roomsmanager.facades.ImportFacade;
@@ -11,6 +14,7 @@ import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvImportDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -52,9 +56,9 @@ public class ImportFacadeImpl implements ImportFacade {
   }
 
   @Override
-  public ImportResultDto importStream(final InputStream inputStream) throws ImportException {
+  public ImportResultDto importStream(final InputStream inputStream) throws ImportException, IOException {
     final CsvImportData csvImportData = parseCsv(inputStream);
-    final ImportData importData = getCsvImportDataConverter().convert(csvImportData);
+    final ImportData importData = convertCsvImportData(csvImportData);
 
     final ImportResultData importResultData = doImport(importData);
 
@@ -62,11 +66,19 @@ public class ImportFacadeImpl implements ImportFacade {
   }
 
   private CsvImportData parseCsv(final InputStream inputStream)
-      throws ImportException {
+          throws ImportException, IOException {
     try {
       return getImportCsvParser().parse(inputStream);
     } catch (ImportCsvParser.CsvParsingException e) {
-      throw new ImportException("Invalid csv file", e);
+      throw new ImportValidationFailedException("Invalid csv file", e, INVALID_FILE);
+    }
+  }
+
+  private ImportData convertCsvImportData(CsvImportData csvImportData) throws ImportException {
+    try{
+      return getCsvImportDataConverter().convert(csvImportData);
+    }catch (Converter.ConversionException e){
+      throw new ImportException(e.getMessage(), e);
     }
   }
 

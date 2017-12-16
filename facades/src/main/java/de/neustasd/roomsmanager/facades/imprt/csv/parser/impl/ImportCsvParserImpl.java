@@ -1,5 +1,6 @@
 package de.neustasd.roomsmanager.facades.imprt.csv.parser.impl;
 
+import de.neustasd.roomsmanager.core.services.converters.Converter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.PersonStringConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
@@ -33,13 +34,13 @@ public class ImportCsvParserImpl implements ImportCsvParser {
   }
 
   @Override
-  public CsvImportData parse(final InputStream inputStream) throws CsvParsingException {
+  public CsvImportData parse(final InputStream inputStream) throws CsvParsingException, IOException {
     try {
       final List<CsvRoomData> roomDataList = doParse(inputStream);
 
       return CsvImportData.builder().roomDataList(roomDataList).build();
-    } catch (final IOException e) {
-      throw new CsvParsingException(e);
+    }catch (final Converter.ConversionException e){
+      throw new CsvParsingException(e.getMessage(), e);
     }
   }
 

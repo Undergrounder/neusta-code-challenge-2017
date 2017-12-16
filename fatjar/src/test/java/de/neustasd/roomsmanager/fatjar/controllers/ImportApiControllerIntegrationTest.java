@@ -11,7 +11,6 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 
 /** Created by Adrian Tello on 09/12/2017. */
 public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTest {
@@ -84,6 +83,11 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
   }
 
   @Test
+  public void testImportFileInvalidPerson() throws IOException {
+    doTestValidationFailed(this::importSitzplanInvalidPersonFile, 4);
+  }
+
+  @Test
   public void testInvalidMethod() {
     doTestInvalidMethod("/api/import");
   }
@@ -103,5 +107,8 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
 
   private ResponseEntity<ImportResultDto> importSitzplanInvalidRoomNumberFile() {
     return postResource("/imports/sitzplan_invalid_room_number.csv");
+  }
+  private ResponseEntity<ImportResultDto> importSitzplanInvalidPersonFile() {
+    return postResource("/imports/sitzplan_invalid_person.csv");
   }
 }

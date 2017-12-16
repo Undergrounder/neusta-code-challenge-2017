@@ -2,6 +2,7 @@ package de.neustasd.roomsmanager.facades;
 
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -12,7 +13,7 @@ import java.io.InputStream;
  *  @author Adrian Tello
  */
 public interface ImportFacade {
-  ImportResultDto importStream(final InputStream inputStream) throws ImportException;
+  ImportResultDto importStream(final InputStream inputStream) throws ImportException, IOException;
 
   class ImportException extends Exception {
     public ImportException(final String message, final Throwable cause) {
@@ -37,6 +38,7 @@ public interface ImportFacade {
       DUPLICATED_ROOM_NUMBER,
       DUPLICATED_PERSON,
       INVALID_ENTRY,
+      INVALID_FILE,
       OTHER;
     }
   }
