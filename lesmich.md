@@ -28,6 +28,7 @@ gradlew test jacocoTestReport
 ```
 
 ## Deployment
+Das Datenbank wird sich beim Starten in dem Verzeichnis `~/roomsmanager` erstellen.
 ### Fat-Jar
 Fat-Jar-Datei ausführen.
 ```

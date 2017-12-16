@@ -2,10 +2,10 @@
 -- Initial data
 -------------------------------------------------------------------------------
 -- Title
-INSERT INTO title (name) VALUES ('Dr.')
+MERGE INTO title (name) KEY(name) VALUES ('Dr.')
 
 -------------------------------------------------------------------------------
 -- NameAddition
-INSERT INTO name_addition (name) VALUES ('van')
-INSERT INTO name_addition (name) VALUES ('von')
-INSERT INTO name_addition (name) VALUES ('de')
+MERGE INTO name_addition (name) KEY(name) VALUES ('van')
+MERGE INTO name_addition (name) KEY(name) VALUES ('von')
+MERGE INTO name_addition (name) KEY(name) VALUES ('de')
