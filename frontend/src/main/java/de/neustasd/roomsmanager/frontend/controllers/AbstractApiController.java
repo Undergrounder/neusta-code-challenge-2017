@@ -3,8 +3,6 @@ package de.neustasd.roomsmanager.frontend.controllers;
 import de.neustasd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowedException;
 import de.neustasd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
 import de.neustasd.roomsmanager.frontend.dto.ExceptionDto;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -14,12 +12,9 @@ public abstract class AbstractApiController {
 
   private static final String NOT_FOUND_MESSAGE = "Not Found";
   private static final String METHOD_NOT_ALLOWED_MESSAGE = "Method not allowed";
-  private final Logger LOG = LogManager.getLogger(AbstractApiController.class);
 
   @ExceptionHandler(value = {Exception.class})
   public ResponseEntity<ExceptionDto> exceptionHandler(final Exception e) {
-    LOG.error(e.getMessage(), e);
-
     if (e instanceof NoHandlerFoundException || e instanceof NotFoundException) {
       return createExceptionResponseEntity(404, NOT_FOUND_MESSAGE);
     } else if (e instanceof MethodNotAllowedException) {
