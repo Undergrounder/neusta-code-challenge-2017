@@ -40,7 +40,7 @@ Das Datenbank wird sich beim Starten in dem Verzeichnis `~/roomsmanager` erstell
 ### Fat-Jar
 Fat-Jar-Datei ausführen.
 ```
-java -jar roomsmanager-fatjar-1.0.jar
+java -jar roomsmanager-fatjar-1.0-SNAPSHOT.jar
 ```
 
 ### War
