@@ -53,7 +53,7 @@ War-Datei in Tomcat deployen.
 https://tomcat.apache.org/tomcat-8.0-doc/html-manager-howto.html#Deploy
 
 ## Versionierung
-Wir benutzten [SemVer](https://semver.org/) für die Versionierung.
+Wir benutzen [SemVer](https://semver.org/) für die Versionierung.
 
 ##Copyright
 &copy; 2017 Team Neusta
