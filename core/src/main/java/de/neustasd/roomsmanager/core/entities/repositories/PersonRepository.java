@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Repository for the Person entity.
  *
- * <P>Allows searching and storing Person entities.</P>
+ * <p>Allows searching and storing Person entities.
  *
  * @author Adrian Tello
  */

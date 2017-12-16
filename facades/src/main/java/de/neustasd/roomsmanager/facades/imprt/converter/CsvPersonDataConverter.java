@@ -5,5 +5,4 @@ import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 
 /** Created by Adrian Tello on 09/12/2017. */
-public interface CsvPersonDataConverter
-    extends Converter<CsvPersonData, PersonData> {}
+public interface CsvPersonDataConverter extends Converter<CsvPersonData, PersonData> {}

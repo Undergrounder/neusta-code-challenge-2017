@@ -8,7 +8,5 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import(FacadesConfiguration.class)
 @ComponentScan("de.neustasd.roomsmanager.frontend")
-/**
- * Spring Configuration for the frontend project.
- */
+/** Spring Configuration for the frontend project. */
 public class FrontendConfiguration {}

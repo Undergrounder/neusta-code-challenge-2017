@@ -9,21 +9,17 @@ import lombok.Value;
 /**
  * Room data transfer object.
  *
- * Represents a room and its people.
+ * <p>Represents a room and its people.
  *
  * @author Adrian Tello
  */
 @Builder
 @Value
 public class RoomDto {
-  /**
-   * Room number
-   */
+  /** Room number */
   @NonNull private String room;
 
-  /**
-   * People in the room
-   */
+  /** People in the room */
   @NonNull
   @Singular("person")
   private List<PersonDto> people;

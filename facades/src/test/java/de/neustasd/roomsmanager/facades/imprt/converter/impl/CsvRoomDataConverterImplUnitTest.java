@@ -8,7 +8,6 @@ import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.core.services.data.RoomData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvPersonDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvRoomDataConverter;
-import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvRoomData;
 import java.util.List;
@@ -34,8 +33,7 @@ public class CsvRoomDataConverterImplUnitTest {
   @Test
   public void testEmptyRoom() {
     // Prepare
-    final CsvRoomData csvRoomData =
-        CsvRoomData.builder().number("1234").build();
+    final CsvRoomData csvRoomData = CsvRoomData.builder().number("1234").build();
 
     // Test
     final RoomData roomData = csvRoomDataConverter.convert(csvRoomData);
@@ -53,13 +51,13 @@ public class CsvRoomDataConverterImplUnitTest {
   public void testRoom() {
     // Prepare
     final CsvPersonData csvPersonData1 =
-            CsvPersonData.builder()
+        CsvPersonData.builder()
             .firstName("Adrian")
             .lastName("Tello")
             .ldapUser("a.lasheras")
             .build();
     final CsvPersonData csvPersonData2 =
-            CsvPersonData.builder()
+        CsvPersonData.builder()
             .title("Dr.")
             .firstName("Vorname")
             .lastName("Nachname")
@@ -67,7 +65,7 @@ public class CsvRoomDataConverterImplUnitTest {
             .build();
 
     final CsvRoomData csvRoomData =
-            CsvRoomData.builder()
+        CsvRoomData.builder()
             .number("1234")
             .personData(csvPersonData1)
             .personData(csvPersonData2)
@@ -75,11 +73,7 @@ public class CsvRoomDataConverterImplUnitTest {
 
     // Prepare results
     final PersonData personData1 =
-        PersonData.builder()
-            .firstName("Adrian")
-            .lastName("Tello")
-            .ldapUser("a.lasheras")
-            .build();
+        PersonData.builder().firstName("Adrian").lastName("Tello").ldapUser("a.lasheras").build();
     final PersonData personData2 =
         PersonData.builder()
             .title("Dr.")

@@ -8,7 +8,6 @@ import de.neustasd.roomsmanager.core.services.data.ImportData;
 import de.neustasd.roomsmanager.core.services.data.RoomData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvImportDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvRoomDataConverter;
-import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvRoomData;
 import java.util.List;
@@ -34,8 +33,7 @@ public class CsvImportDataConverterImplUnitTest {
   @Test
   public void testEmptyRoom() {
     // Prepare
-    final CsvImportData csvImportDataSource =
-        CsvImportData.builder().build();
+    final CsvImportData csvImportDataSource = CsvImportData.builder().build();
 
     // Test
     final ImportData importData = csvImportDataConverter.convert(csvImportDataSource);
@@ -52,25 +50,18 @@ public class CsvImportDataConverterImplUnitTest {
   @Test
   public void testMultipleRooms() {
     // Prepare
-    final CsvRoomData csvRoomData1 =
-        CsvRoomData.builder().number("1111").build();
-    final CsvRoomData csvRoomData2 =
-        CsvRoomData.builder().number("1112").build();
+    final CsvRoomData csvRoomData1 = CsvRoomData.builder().number("1111").build();
+    final CsvRoomData csvRoomData2 = CsvRoomData.builder().number("1112").build();
 
     // Dummy results
-    final RoomData roomData1 =
-        RoomData.builder().number("1111").build();
-    final RoomData roomData2 =
-        RoomData.builder().number("1112").build();
+    final RoomData roomData1 = RoomData.builder().number("1111").build();
+    final RoomData roomData2 = RoomData.builder().number("1112").build();
 
     when(csvRoomDataConverter.convert(csvRoomData1)).thenReturn(roomData1);
     when(csvRoomDataConverter.convert(csvRoomData2)).thenReturn(roomData2);
 
     final CsvImportData csvImportDataSource =
-        CsvImportData.builder()
-            .roomData(csvRoomData1)
-            .roomData(csvRoomData2)
-            .build();
+        CsvImportData.builder().roomData(csvRoomData1).roomData(csvRoomData2).build();
 
     // Test
     final ImportData importData = csvImportDataConverter.convert(csvImportDataSource);

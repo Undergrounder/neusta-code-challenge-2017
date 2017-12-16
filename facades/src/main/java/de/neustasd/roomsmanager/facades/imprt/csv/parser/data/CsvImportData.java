@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 
-/**
- * Created by Adrian Tello on 16/12/2017.
- */
+/** Created by Adrian Tello on 16/12/2017. */
 @Builder
 @Value
 public class CsvImportData {
-    @Singular("roomData")
-    private List<CsvRoomData> roomDataList;
+  @Singular("roomData")
+  private List<CsvRoomData> roomDataList;
 }

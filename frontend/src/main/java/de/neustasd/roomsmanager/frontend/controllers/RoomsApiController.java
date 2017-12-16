@@ -1,5 +1,7 @@
 package de.neustasd.roomsmanager.frontend.controllers;
 
+import static de.neustasd.roomsmanager.frontend.controllers.RoomsApiController.BASE_PATH;
+
 import de.neustasd.roomsmanager.facades.RoomsFacade;
 import de.neustasd.roomsmanager.facades.dto.RoomDto;
 import de.neustasd.roomsmanager.facades.dto.RoomsDto;
@@ -7,13 +9,14 @@ import de.neustasd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowed
 import de.neustasd.roomsmanager.frontend.controllers.exceptions.NotFoundException;
 import de.neustasd.roomsmanager.frontend.controllers.exceptions.RoomNotFoundException;
 import de.neustasd.roomsmanager.frontend.dto.ExceptionDto;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-
-import static de.neustasd.roomsmanager.frontend.controllers.RoomsApiController.BASE_PATH;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /** Created by Adrian Tello on 05/12/2017. */
 @RestController
@@ -24,6 +27,16 @@ public class RoomsApiController extends AbstractApiController {
 
   @Autowired private RoomsFacade roomsFacade;
 
+  /**
+   * Get a room information by its number
+   *
+   * @param roomNumber The room number
+   *
+   * @return The room information
+   *
+   * @throws NotFoundException If no room found
+   * @throws RoomsFacade.InvalidRoomNumberException If the room number hasn't a valid format.
+   */
   @GetMapping("/{roomNumber}")
   public RoomDto getRoom(@PathVariable final String roomNumber)
       throws NotFoundException, RoomsFacade.InvalidRoomNumberException {
@@ -35,17 +48,32 @@ public class RoomsApiController extends AbstractApiController {
     return roomDtoOptional.get();
   }
 
+  /**
+   * Catches all calls for non allowed methods and throws a MethodNotAllowedException
+   *
+   * @throws MethodNotAllowedException
+   */
   @RequestMapping("/{roomNumber}")
   public void othersRoom(@PathVariable final String roomNumber)
       throws NotFoundException, MethodNotAllowedException {
     throw new MethodNotAllowedException();
   }
 
+  /**
+   * Get all the rooms
+   *
+   * @return Information about all the rooms
+   */
   @GetMapping
-  public RoomsDto getRooms() throws NotFoundException {
+  public RoomsDto getRooms(){
     return roomsFacade.findRooms();
   }
 
+  /**
+   * Catches all calls for non allowed methods and throws a MethodNotAllowedException
+   *
+   * @throws MethodNotAllowedException
+   */
   @RequestMapping
   public void othersRooms() throws MethodNotAllowedException {
     throw new MethodNotAllowedException();

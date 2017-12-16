@@ -23,8 +23,7 @@ public class CsvRoomDataConverterImpl implements CsvRoomDataConverter {
   }
 
   @Override
-  public RoomData convert(final CsvRoomData source)
-      throws ConversionException {
+  public RoomData convert(final CsvRoomData source) throws ConversionException {
     // Get values
     final String sourceNumber = source.getNumber();
     final List<CsvPersonData> sourcePersonDataList = source.getPersonDataList();
@@ -34,10 +33,7 @@ public class CsvRoomDataConverterImpl implements CsvRoomDataConverter {
         ConverterUtils.convertAll(sourcePersonDataList, getCsvPersonDataConverter());
 
     // Create object
-    return RoomData.builder()
-        .number(sourceNumber)
-        .personDataList(targetPersonDataList)
-        .build();
+    return RoomData.builder().number(sourceNumber).personDataList(targetPersonDataList).build();
   }
 
   private CsvPersonDataConverter getCsvPersonDataConverter() {

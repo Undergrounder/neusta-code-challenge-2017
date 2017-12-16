@@ -24,7 +24,8 @@ public @interface RoomNumberConstraint {
   String message() default "";
 
   /**
-   *  Get the validation groups
+   * Get the validation groups
+   *
    * @return The validation groups
    */
   Class<?>[] groups() default {};

@@ -108,6 +108,7 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
   private ResponseEntity<ImportResultDto> importSitzplanInvalidRoomNumberFile() {
     return postResource("/imports/sitzplan_invalid_room_number.csv");
   }
+
   private ResponseEntity<ImportResultDto> importSitzplanInvalidPersonFile() {
     return postResource("/imports/sitzplan_invalid_person.csv");
   }

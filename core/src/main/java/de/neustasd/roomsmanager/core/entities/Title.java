@@ -11,8 +11,7 @@ import javax.persistence.Id;
 /**
  * Title entity.
  *
- * <P>Represents a persons title.
- * Example: "Dr."</P>
+ * <p>Represents a persons title. Example: "Dr."
  *
  * @author Adrian Tello
  */

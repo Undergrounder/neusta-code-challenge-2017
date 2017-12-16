@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @Import(FrontendConfiguration.class)
-/**
- * Spring Configuration for the war project.
- */
+/** Spring Configuration for the war project. */
 public class WarApplication extends SpringBootServletInitializer {
   public static void main(String[] args) {
     SpringApplication.run(WarApplication.class, args);

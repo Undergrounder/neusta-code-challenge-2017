@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Repository for the Room entity.
  *
- * <P>Allows searching and storing Room entities.</P>
+ * <p>Allows searching and storing Room entities.
  *
  * @author Adrian Tello
  */

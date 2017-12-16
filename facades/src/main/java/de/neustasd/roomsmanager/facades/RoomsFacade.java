@@ -2,7 +2,6 @@ package de.neustasd.roomsmanager.facades;
 
 import de.neustasd.roomsmanager.facades.dto.RoomDto;
 import de.neustasd.roomsmanager.facades.dto.RoomsDto;
-
 import java.util.Optional;
 
 /** Created by Adrian Tello on 05/12/2017. */

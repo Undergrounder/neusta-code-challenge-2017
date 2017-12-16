@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 @Entity
 /**
  * Person entity.
-
- * <P>Represents a person.</P>
+ *
+ * <p>Represents a person.
  *
  * @author Adrian Tello
  */

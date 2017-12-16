@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @Import(FrontendConfiguration.class)
-/**
- * Spring application and configuration for the fatjar project.
- */
+/** Spring application and configuration for the fatjar project. */
 public class FatJarApplication {
   public static void main(String[] args) {
     SpringApplication.run(FatJarApplication.class, args);

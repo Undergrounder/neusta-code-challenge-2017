@@ -41,8 +41,8 @@ import org.springframework.web.client.RestTemplate;
 /** Created by Adrian Tello on 11/12/2017. */
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-  classes = FatJarApplication.class,
-  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+    classes = FatJarApplication.class,
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @ContextConfiguration(classes = FatJarApplication.class)
 public abstract class AbstractApiIntegrationTest {
@@ -71,7 +71,7 @@ public abstract class AbstractApiIntegrationTest {
     final HttpHeaders header = new HttpHeaders();
     header.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-    if(path != null){
+    if (path != null) {
       final HttpHeaders fileHeader = new HttpHeaders();
       fileHeader.setContentType(MediaType.parseMediaType("text/csv"));
 

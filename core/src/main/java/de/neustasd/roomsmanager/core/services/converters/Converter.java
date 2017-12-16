@@ -5,7 +5,6 @@ package de.neustasd.roomsmanager.core.services.converters;
  *
  * @param <S> Source class
  * @param <T> Target class
- *
  * @author Adrian Tello
  */
 public interface Converter<S, T> {
@@ -15,14 +14,11 @@ public interface Converter<S, T> {
    * @param source The source object to convert.
    * @return The converted object
    * @throws ConversionException Conversion not possible
-   *
    * @author Adrian Tello
    */
   T convert(S source) throws ConversionException;
 
-  /**
-   * Exception thrown when the conversion is not possible.
-   */
+  /** Exception thrown when the conversion is not possible. */
   class ConversionException extends RuntimeException {
     public ConversionException(String message) {
       super(message);

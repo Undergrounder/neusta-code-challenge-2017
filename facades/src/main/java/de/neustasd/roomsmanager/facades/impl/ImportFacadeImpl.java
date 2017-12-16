@@ -28,9 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- *  {@inheritDoc}
+ * {@inheritDoc}
  *
- *  @author Adrian Tello
+ * @author Adrian Tello
  */
 @Component
 public class ImportFacadeImpl implements ImportFacade {
@@ -56,7 +56,8 @@ public class ImportFacadeImpl implements ImportFacade {
   }
 
   @Override
-  public ImportResultDto importStream(final InputStream inputStream) throws ImportException, IOException {
+  public ImportResultDto importStream(final InputStream inputStream)
+      throws ImportException, IOException {
     final CsvImportData csvImportData = parseCsv(inputStream);
     final ImportData importData = convertCsvImportData(csvImportData);
 
@@ -66,7 +67,7 @@ public class ImportFacadeImpl implements ImportFacade {
   }
 
   private CsvImportData parseCsv(final InputStream inputStream)
-          throws ImportException, IOException {
+      throws ImportException, IOException {
     try {
       return getImportCsvParser().parse(inputStream);
     } catch (ImportCsvParser.CsvParsingException e) {
@@ -75,15 +76,14 @@ public class ImportFacadeImpl implements ImportFacade {
   }
 
   private ImportData convertCsvImportData(CsvImportData csvImportData) throws ImportException {
-    try{
+    try {
       return getCsvImportDataConverter().convert(csvImportData);
-    }catch (Converter.ConversionException e){
+    } catch (Converter.ConversionException e) {
       throw new ImportException(e.getMessage(), e);
     }
   }
 
-  private ImportResultData doImport(ImportData importData)
-      throws ImportException {
+  private ImportResultData doImport(ImportData importData) throws ImportException {
     try {
       return getImportService().importData(importData);
     } catch (ImportService.InvalidImportDataException e) {

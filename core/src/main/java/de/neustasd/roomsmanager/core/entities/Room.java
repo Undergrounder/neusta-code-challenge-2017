@@ -14,7 +14,8 @@ import javax.persistence.OneToMany;
 @Entity
 /**
  * Room entity.
- * <P>Represents a room.</P>
+ *
+ * <p>Represents a room.
  *
  * @author Adrian Tello
  */

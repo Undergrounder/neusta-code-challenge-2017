@@ -8,17 +8,13 @@ import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
 
-/**
- * Created by Adrian Tello on 16/12/2017.
- */
+/** Created by Adrian Tello on 16/12/2017. */
 @Builder
 @Value
 public class RoomData {
-    @NonNull
-    @RoomNumberConstraint
-    private String number;
+  @NonNull @RoomNumberConstraint private String number;
 
-    @Singular("personData")
-    @Valid
-    private List<PersonData> personDataList;
+  @Singular("personData")
+  @Valid
+  private List<PersonData> personDataList;
 }

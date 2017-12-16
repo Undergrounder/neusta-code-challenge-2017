@@ -10,46 +10,43 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 
-/**
- * Created by Adrian Tello on 16/12/2017.
- */
+/** Created by Adrian Tello on 16/12/2017. */
 public class ConverterUtilsUnitTest {
+  private final NoOpConverter noOpConverter = new NoOpConverter();
 
-    private final NoOpConverter noOpConverter = new NoOpConverter();
+  @Test
+  public void testEmpty() {
+    // Prepare
+    final List<Object> objectList = Collections.emptyList();
 
-    @Test
-    public void testEmpty() {
-        //Prepare
-        final List<Object> objectList = Collections.emptyList();
+    // Test
+    final List<Object> convertedObjects = ConverterUtils.convertAll(objectList, noOpConverter);
 
-        //Test
-        final List<Object> convertedObjects = ConverterUtils.convertAll(objectList, noOpConverter);
+    // Verify
+    assertNotNull(convertedObjects);
+    assertEquals(0, convertedObjects.size());
+  }
 
-        //Verify
-        assertNotNull(convertedObjects);
-        assertEquals(0, convertedObjects.size());
+  @Test
+  public void testMultiple() {
+    // Prepare
+    final String object1 = "object1";
+    final String object2 = "object2";
+    final List<Object> objectList = Arrays.asList(object1, object2);
+
+    // Test
+    final List<Object> convertedObjects = ConverterUtils.convertAll(objectList, noOpConverter);
+
+    // Verify
+    assertNotNull(convertedObjects);
+    assertEquals(convertedObjects, convertedObjects);
+  }
+
+  private static class NoOpConverter implements Converter<Object, Object> {
+
+    @Override
+    public Object convert(Object source) throws ConversionException {
+      return source;
     }
-
-    @Test
-    public void testMultiple() {
-        //Prepare
-        final String object1 = "object1";
-        final String object2 = "object2";
-        final List<Object> objectList = Arrays.asList(object1, object2);
-
-        //Test
-        final List<Object> convertedObjects = ConverterUtils.convertAll(objectList, noOpConverter);
-
-        //Verify
-        assertNotNull(convertedObjects);
-        assertEquals(convertedObjects, convertedObjects);
-    }
-
-    private static class NoOpConverter implements Converter<Object, Object>{
-
-        @Override
-        public Object convert(Object source) throws ConversionException {
-            return source;
-        }
-    }
+  }
 }

@@ -39,7 +39,7 @@ subprojects {
         toolVersion = "0.7.9"
     }
 
-    test{
+    test {
         jacoco {
             excludes = ['*Data']
         }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Repository for the NameAddition entity.
  *
- * <P>Allows searching and storing NameAddition entities.</P>
+ * <p>Allows searching and storing NameAddition entities.
  *
  * @author Adrian Tello
  */

@@ -2,7 +2,6 @@ package de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.impl;
 
 import de.neustasd.roomsmanager.core.services.NameAdditionService;
 import de.neustasd.roomsmanager.core.services.TitleService;
-import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.PersonStringConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 import java.util.ArrayList;
@@ -47,8 +46,7 @@ public class PersonStringConverterImpl implements PersonStringConverter {
 
   private CsvPersonData convert(List<String> splittedSource) {
     // Extracts parts
-    final CsvPersonData.CsvPersonDataBuilder builder =
-        CsvPersonData.builder();
+    final CsvPersonData.CsvPersonDataBuilder builder = CsvPersonData.builder();
 
     // Extract ldapUser
     {

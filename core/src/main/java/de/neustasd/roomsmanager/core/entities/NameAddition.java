@@ -10,8 +10,8 @@ import javax.persistence.Id;
 @Entity
 /**
  * NameAddition entity.
- * <P>Represents a persons name addition.
- * Examples: "de", "van", "von"</P>
+ *
+ * <p>Represents a persons name addition. Examples: "de", "van", "von"
  *
  * @author Adrian Tello
  */

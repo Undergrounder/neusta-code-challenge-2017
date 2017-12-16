@@ -6,15 +6,12 @@ import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
 
-/**
- * Created by Adrian Tello on 16/12/2017.
- */
+/** Created by Adrian Tello on 16/12/2017. */
 @Builder
 @Value
 public class CsvRoomData {
-    @NonNull
-    private String number;
+  @NonNull private String number;
 
-    @Singular("personData")
-    private List<CsvPersonData> personDataList;
+  @Singular("personData")
+  private List<CsvPersonData> personDataList;
 }

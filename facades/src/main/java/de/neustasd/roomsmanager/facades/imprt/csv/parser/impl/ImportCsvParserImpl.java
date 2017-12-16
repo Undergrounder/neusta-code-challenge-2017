@@ -34,12 +34,13 @@ public class ImportCsvParserImpl implements ImportCsvParser {
   }
 
   @Override
-  public CsvImportData parse(final InputStream inputStream) throws CsvParsingException, IOException {
+  public CsvImportData parse(final InputStream inputStream)
+      throws CsvParsingException, IOException {
     try {
       final List<CsvRoomData> roomDataList = doParse(inputStream);
 
       return CsvImportData.builder().roomDataList(roomDataList).build();
-    }catch (final Converter.ConversionException e){
+    } catch (final Converter.ConversionException e) {
       throw new CsvParsingException(e.getMessage(), e);
     }
   }

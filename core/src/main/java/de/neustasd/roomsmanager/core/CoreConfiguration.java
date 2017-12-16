@@ -11,7 +11,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EntityScan("de.neustasd.roomsmanager.core.entities")
 @ComponentScan("de.neustasd.roomsmanager.core")
-/**
- * Spring Configuration for the core project.
- */
+/** Spring Configuration for the core project. */
 public class CoreConfiguration {}

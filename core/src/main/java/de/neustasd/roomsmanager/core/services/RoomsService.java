@@ -2,7 +2,6 @@ package de.neustasd.roomsmanager.core.services;
 
 import de.neustasd.roomsmanager.core.entities.Room;
 import de.neustasd.roomsmanager.core.services.constraints.RoomNumberConstraint;
-
 import java.util.List;
 import java.util.Optional;
 

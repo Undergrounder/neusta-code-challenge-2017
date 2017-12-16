@@ -36,7 +36,12 @@ public class ImportServiceImpl implements ImportService {
   private final PersonDataConverter personDataConverter;
 
   @Autowired
-  public ImportServiceImpl(Validator validator, RoomRepository roomRepository, PersonRepository personRepository, RoomDataConverter roomDataConverter, PersonDataConverter personDataConverter) {
+  public ImportServiceImpl(
+      Validator validator,
+      RoomRepository roomRepository,
+      PersonRepository personRepository,
+      RoomDataConverter roomDataConverter,
+      PersonDataConverter personDataConverter) {
     this.validator = validator;
     this.roomRepository = roomRepository;
     this.personRepository = personRepository;

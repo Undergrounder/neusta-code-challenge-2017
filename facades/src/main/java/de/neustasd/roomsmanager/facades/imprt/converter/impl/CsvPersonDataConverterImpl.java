@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CsvPersonDataConverterImpl implements CsvPersonDataConverter {
   @Override
-  public PersonData convert(final CsvPersonData source)
-      throws ConversionException {
+  public PersonData convert(final CsvPersonData source) throws ConversionException {
     return PersonData.builder()
         .title(source.getTitle())
         .firstName(source.getFirstName())

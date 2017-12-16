@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 
 import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvPersonDataConverter;
-import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class CsvPersonDataConverterImplUnitTest {
   public void test1() {
     // Prepare
     final CsvPersonData csvPersonData =
-            CsvPersonData.builder()
+        CsvPersonData.builder()
             .firstName("Firstname")
             .lastName("Lastname")
             .ldapUser("ldapuser")

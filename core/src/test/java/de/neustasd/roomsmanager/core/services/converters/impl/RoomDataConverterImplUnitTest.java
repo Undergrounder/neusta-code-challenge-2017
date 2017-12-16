@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import de.neustasd.roomsmanager.core.entities.Room;
-import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.converters.Converter;
 import de.neustasd.roomsmanager.core.services.converters.RoomDataConverter;
 import de.neustasd.roomsmanager.core.services.data.RoomData;
@@ -19,8 +18,7 @@ public class RoomDataConverterImplUnitTest {
   public void testConversion() throws Converter.ConversionException {
     // Prepare
     final String roomNumber = "1234";
-    final RoomData roomData =
-        RoomData.builder().number(roomNumber).build();
+    final RoomData roomData = RoomData.builder().number(roomNumber).build();
 
     // Test
     final Room room = roomDataConverter.convert(roomData);

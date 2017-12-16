@@ -10,8 +10,7 @@ import javax.validation.Payload;
 /**
  * Constraint for testing the validity of ImportData class.
  *
- * <P>Validates that no room number is repeated and
- * that no person is in more than one room.</P>
+ * <p>Validates that no room number is repeated and that no person is in more than one room.
  *
  * @author Adrian Tello
  */
@@ -27,7 +26,8 @@ public @interface ValidImportDataConstraint {
   String message() default "";
 
   /**
-   *  Get the validation groups
+   * Get the validation groups
+   *
    * @return The validation groups
    */
   Class<?>[] groups() default {};

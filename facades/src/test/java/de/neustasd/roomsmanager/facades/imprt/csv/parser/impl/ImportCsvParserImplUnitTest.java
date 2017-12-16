@@ -89,39 +89,23 @@ public class ImportCsvParserImplUnitTest {
         .thenReturn(sborcherdingPersonData);
 
     final CsvPersonData thahnPersonData =
-        CsvPersonData.builder()
-            .firstName("Tobias")
-            .lastName("Hahn")
-            .ldapUser("thahn")
-            .build();
+        CsvPersonData.builder().firstName("Tobias").lastName("Hahn").ldapUser("thahn").build();
     when(personStringConverter.convert("Tobias Hahn (thahn)")).thenReturn(thahnPersonData);
 
     final CsvPersonData delmPersonData =
-            CsvPersonData.builder()
-            .firstName("Dominik")
-            .lastName("Elm")
-            .ldapUser("delm")
-            .build();
+        CsvPersonData.builder().firstName("Dominik").lastName("Elm").ldapUser("delm").build();
     when(personStringConverter.convert("Dominik Elm (delm)")).thenReturn(delmPersonData);
 
     final CsvPersonData kweslingPersonData =
-            CsvPersonData.builder()
-            .firstName("Kai")
-            .lastName("Wesling")
-            .ldapUser("kwesling")
-            .build();
+        CsvPersonData.builder().firstName("Kai").lastName("Wesling").ldapUser("kwesling").build();
     when(personStringConverter.convert("Kai Wesling (kwesling)")).thenReturn(kweslingPersonData);
 
     final CsvPersonData tkrusePersonData =
-            CsvPersonData.builder()
-            .firstName("Thomas")
-            .lastName("Kruse")
-            .ldapUser("tkruse")
-            .build();
+        CsvPersonData.builder().firstName("Thomas").lastName("Kruse").ldapUser("tkruse").build();
     when(personStringConverter.convert("Thomas Kruse (tkruse)")).thenReturn(tkrusePersonData);
 
     final CsvPersonData cschuettePersonData =
-            CsvPersonData.builder()
+        CsvPersonData.builder()
             .firstName("Carsten")
             .lastName("Schütte")
             .ldapUser("cschuette")
@@ -130,19 +114,11 @@ public class ImportCsvParserImplUnitTest {
         .thenReturn(cschuettePersonData);
 
     final CsvPersonData celfersPersonData =
-            CsvPersonData.builder()
-            .firstName("Carsten")
-            .lastName("Elfers")
-            .ldapUser("celfers")
-            .build();
+        CsvPersonData.builder().firstName("Carsten").lastName("Elfers").ldapUser("celfers").build();
     when(personStringConverter.convert("Carsten Elfers (celfers)")).thenReturn(celfersPersonData);
 
     final CsvPersonData ndyminiPersonData =
-            CsvPersonData.builder()
-            .firstName("Nicole")
-            .lastName("Dymini")
-            .ldapUser("ndymini")
-            .build();
+        CsvPersonData.builder().firstName("Nicole").lastName("Dymini").ldapUser("ndymini").build();
     when(personStringConverter.convert("Nicole Dymini (ndymini)")).thenReturn(ndyminiPersonData);
 
     try (InputStream inputStream =
@@ -180,9 +156,7 @@ public class ImportCsvParserImplUnitTest {
   }
 
   private void assertRoom(
-      CsvRoomData csvRoomData,
-      String expectedRoomNumber,
-      List<CsvPersonData> csvPersonData) {
+      CsvRoomData csvRoomData, String expectedRoomNumber, List<CsvPersonData> csvPersonData) {
     assertNotNull(csvPersonData);
 
     assertEquals(expectedRoomNumber, csvRoomData.getNumber());

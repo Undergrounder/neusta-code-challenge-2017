@@ -1,16 +1,15 @@
 package de.neustasd.roomsmanager.facades;
 
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
-
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * Facade for the import.
  *
- * <p>Allows importing rooms data.</p>
+ * <p>Allows importing rooms data.
  *
- *  @author Adrian Tello
+ * @author Adrian Tello
  */
 public interface ImportFacade {
   ImportResultDto importStream(final InputStream inputStream) throws ImportException, IOException;
