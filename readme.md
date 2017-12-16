@@ -20,7 +20,7 @@ core <- facades <- frontend <-|
   * Kann in Tomcat 8 deployed werden.
   
 ## Tests und statische Code-Analysen ausführen
-Die Anforderungen des Projektes werden mit Integrationtests getestet.  
+Die Anforderungen des Projektes werden mit Integrationtests (in fatjar) getestet.  
 Um Bugs zu vermeiden und die Entwicklung schneller zu machen, benutzten wir auch Unit-Tests und statische Code-Analysen.
 
 ```
