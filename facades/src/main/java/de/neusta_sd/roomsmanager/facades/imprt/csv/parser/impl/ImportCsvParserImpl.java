@@ -17,68 +17,61 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by Adrian Tello on 09/12/2017.
- */
+/** Created by Adrian Tello on 09/12/2017. */
 @Component
 public class ImportCsvParserImpl implements ImportCsvParser {
 
-    private final static String INPUT_STREAM_ENCODING = "UTF-8";
+  private static final String INPUT_STREAM_ENCODING = "UTF-8";
 
-    private final PersonStringConverter personStringConverter;
+  private final PersonStringConverter personStringConverter;
 
-    @Autowired
-    public ImportCsvParserImpl(PersonStringConverter personStringConverter) {
-        this.personStringConverter = personStringConverter;
+  @Autowired
+  public ImportCsvParserImpl(PersonStringConverter personStringConverter) {
+    this.personStringConverter = personStringConverter;
+  }
+
+  @Override
+  public CsvImportData parse(final InputStream inputStream) throws CsvParsingException {
+    try {
+      final List<CsvRoomData> roomDataList = doParse(inputStream);
+
+      return CsvImportData.builder().roomDataList(roomDataList).build();
+    } catch (final IOException e) {
+      throw new CsvParsingException(e);
+    }
+  }
+
+  private List<CsvRoomData> doParse(final InputStream inputStream) throws IOException {
+    final Reader reader = new InputStreamReader(inputStream, INPUT_STREAM_ENCODING);
+    final CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);
+
+    final List<CsvRoomData> roomDataList = new ArrayList<>();
+    for (CSVRecord csvRecord : parser) {
+      final CsvRoomData csvRoomData = convertCsvRecord(csvRecord);
+      roomDataList.add(csvRoomData);
     }
 
-    @Override
-    public CsvImportData parse(final InputStream inputStream) throws CsvParsingException {
-        try {
-            final List<CsvRoomData> roomDataList = doParse(inputStream);
+    return roomDataList;
+  }
 
-            return CsvImportData.builder()
-                    .roomDataList(roomDataList)
-                    .build();
-        } catch (final IOException e) {
-            throw new CsvParsingException(e);
-        }
+  private CsvRoomData convertCsvRecord(final CSVRecord csvRecord) {
+    final Iterator<String> csvRecordIt = csvRecord.iterator();
+
+    final String number = csvRecordIt.next();
+
+    final List<CsvPersonData> personDataList = new ArrayList<>();
+    while (csvRecordIt.hasNext()) {
+      final String personCellStr = csvRecordIt.next();
+
+      if (!StringUtils.isEmpty(personCellStr)) {
+        final CsvPersonData csvPersonData = getPersonStringConverter().convert(personCellStr);
+        personDataList.add(csvPersonData);
+      }
     }
+    return CsvRoomData.builder().number(number).personDataList(personDataList).build();
+  }
 
-    private List<CsvRoomData> doParse(final InputStream inputStream) throws IOException {
-        final Reader reader = new InputStreamReader(inputStream, INPUT_STREAM_ENCODING);
-        final CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);
-
-        final List<CsvRoomData> roomDataList = new ArrayList<>();
-        for (CSVRecord csvRecord : parser) {
-            final CsvRoomData csvRoomData = convertCsvRecord(csvRecord);
-            roomDataList.add(csvRoomData);
-        }
-
-        return roomDataList;
-    }
-
-    private CsvRoomData convertCsvRecord(final CSVRecord csvRecord) {
-        final Iterator<String> csvRecordIt = csvRecord.iterator();
-
-        final String number = csvRecordIt.next();
-
-        final List<CsvPersonData> personDataList = new ArrayList<>();
-        while (csvRecordIt.hasNext()) {
-            final String personCellStr = csvRecordIt.next();
-
-            if (!StringUtils.isEmpty(personCellStr)) {
-                final CsvPersonData csvPersonData = getPersonStringConverter().convert(personCellStr);
-                personDataList.add(csvPersonData);
-            }
-        }
-        return CsvRoomData.builder()
-                .number(number)
-                .personDataList(personDataList)
-                .build();
-    }
-
-    protected PersonStringConverter getPersonStringConverter() {
-        return personStringConverter;
-    }
+  protected PersonStringConverter getPersonStringConverter() {
+    return personStringConverter;
+  }
 }

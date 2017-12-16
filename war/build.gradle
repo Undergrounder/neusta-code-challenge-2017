@@ -4,7 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
 
-dependencies{
+dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile project(':roomsmanager-frontend')
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

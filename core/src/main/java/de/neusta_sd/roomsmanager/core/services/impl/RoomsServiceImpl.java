@@ -10,31 +10,29 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by Adrian Tello on 05/12/2017.
- */
+/** Created by Adrian Tello on 05/12/2017. */
 @Service
 @Validated
 public class RoomsServiceImpl implements RoomsService {
 
-    private final RoomRepository roomRepository;
+  private final RoomRepository roomRepository;
 
-    @Autowired
-    public RoomsServiceImpl(final RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
+  @Autowired
+  public RoomsServiceImpl(final RoomRepository roomRepository) {
+    this.roomRepository = roomRepository;
+  }
 
-    @Override
-    public Optional<Room> findRoomByNumber(String number) {
-        return getRoomRepository().findOneByNumber(number);
-    }
+  @Override
+  public Optional<Room> findRoomByNumber(String number) {
+    return getRoomRepository().findOneByNumber(number);
+  }
 
-    @Override
-    public List<Room> findAll() {
-        return getRoomRepository().findAll();
-    }
+  @Override
+  public List<Room> findAll() {
+    return getRoomRepository().findAll();
+  }
 
-    private RoomRepository getRoomRepository() {
-        return roomRepository;
-    }
+  private RoomRepository getRoomRepository() {
+    return roomRepository;
+  }
 }

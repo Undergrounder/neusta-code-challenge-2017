@@ -8,30 +8,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * Created by Adrian Tello on 09/12/2017.
- */
+/** Created by Adrian Tello on 09/12/2017. */
 @Service
 public class NameAdditionServiceImpl implements NameAdditionService {
 
-    private NameAdditionRepository nameAdditionRepository;
+  private NameAdditionRepository nameAdditionRepository;
 
-    @Autowired
-    public NameAdditionServiceImpl(NameAdditionRepository nameAdditionRepository) {
-        this.nameAdditionRepository = nameAdditionRepository;
-    }
+  @Autowired
+  public NameAdditionServiceImpl(NameAdditionRepository nameAdditionRepository) {
+    this.nameAdditionRepository = nameAdditionRepository;
+  }
 
-    @Override
-    public Optional<NameAddition> getNameAddition(String name) {
-        return getNameAdditionRepository().findOneByName(name);
-    }
+  @Override
+  public Optional<NameAddition> getNameAddition(String name) {
+    return getNameAdditionRepository().findOneByName(name);
+  }
 
-    @Override
-    public boolean existsNameAddition(String name) {
-        return getNameAddition(name).isPresent();
-    }
+  @Override
+  public boolean existsNameAddition(String name) {
+    return getNameAddition(name).isPresent();
+  }
 
-    protected NameAdditionRepository getNameAdditionRepository() {
-        return nameAdditionRepository;
-    }
+  protected NameAdditionRepository getNameAdditionRepository() {
+    return nameAdditionRepository;
+  }
 }

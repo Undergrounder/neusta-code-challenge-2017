@@ -12,93 +12,86 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 
-
-/**
- * Created by Adrian Tello on 01/12/2017.
- */
+/** Created by Adrian Tello on 01/12/2017. */
 public interface ImportService {
-    ImportResultData importData(final ImportData importData) throws ImportException;
+  ImportResultData importData(final ImportData importData) throws ImportException;
 
-    @Builder
-    @Value
-    @ValidImportDataConstraint
-    class ImportData {
-        @Singular("roomData")
-        @NonNull
-        @Valid
-        private List<RoomData> roomDataList;
+  @Builder
+  @Value
+  @ValidImportDataConstraint
+  class ImportData {
+    @Singular("roomData")
+    @NonNull
+    @Valid
+    private List<RoomData> roomDataList;
+  }
+
+  @Builder
+  @Value
+  class RoomData {
+    @NonNull @RoomNumberConstraint private String number;
+
+    @Valid private List<PersonData> personDataList;
+  }
+
+  @Builder
+  @Value
+  class PersonData {
+    private String title;
+
+    @NonNull private String firstName;
+
+    @NonNull private String lastName;
+
+    private String nameAddition;
+
+    @NonNull private String ldapUser;
+  }
+
+  @Builder
+  @Value
+  class ImportResultData {
+    private long persons;
+    private long rooms;
+  }
+
+  class ImportException extends Exception {
+    public ImportException(String message) {
+      super(message);
     }
 
-    @Builder
-    @Value
-    class RoomData {
-        @NonNull
-        @RoomNumberConstraint
-        private String number;
-
-        @Valid
-        private List<PersonData> personDataList;
+    public ImportException(String message, Throwable cause) {
+      super(message, cause);
     }
 
-    @Builder
-    @Value
-    class PersonData {
-        private String title;
+    public ImportException(Throwable cause) {
+      super(cause);
+    }
+  }
 
-        @NonNull
-        private String firstName;
+  class InvalidImportDataException extends ImportException {
+    private final Collection<ConstraintViolation<ImportData>> constraintViolations;
 
-        @NonNull
-        private String lastName;
+    public InvalidImportDataException(
+        final Collection<ConstraintViolation<ImportData>> constraintViolations) {
+      super(buildMessage(constraintViolations));
 
-        private String nameAddition;
-
-        @NonNull
-        private String ldapUser;
+      this.constraintViolations = constraintViolations;
     }
 
-    @Builder
-    @Value
-    class ImportResultData {
-        private long persons;
-        private long rooms;
+    private static String buildMessage(
+        final Collection<ConstraintViolation<ImportData>> constraintViolations) {
+      final StringBuilder messageBuilder = new StringBuilder();
+
+      for (ConstraintViolation<ImportData> constraintViolation : constraintViolations) {
+        messageBuilder.append(constraintViolation.toString());
+      }
+
+      return messageBuilder.toString();
     }
 
-    class ImportException extends Exception {
-        public ImportException(String message) {
-            super(message);
-        }
-
-        public ImportException(String message, Throwable cause) {
-            super(message, cause);
-        }
-
-        public ImportException(Throwable cause) {
-            super(cause);
-        }
+    public Collection<ConstraintViolation<ImportData>> getConstraintViolations() {
+      return constraintViolations;
     }
-
-    class InvalidImportDataException extends ImportException {
-        private final Collection<ConstraintViolation<ImportData>> constraintViolations;
-
-        public InvalidImportDataException(final Collection<ConstraintViolation<ImportData>> constraintViolations) {
-            super(buildMessage(constraintViolations));
-
-            this.constraintViolations = constraintViolations;
-        }
-
-        private static String buildMessage(final Collection<ConstraintViolation<ImportData>> constraintViolations) {
-            final StringBuilder messageBuilder = new StringBuilder();
-
-            for (ConstraintViolation<ImportData> constraintViolation : constraintViolations) {
-                messageBuilder.append(constraintViolation.toString());
-            }
-
-            return messageBuilder.toString();
-        }
-
-        public Collection<ConstraintViolation<ImportData>> getConstraintViolations() {
-            return constraintViolations;
-        }
-    }
+  }
 }

@@ -29,146 +29,141 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Adrian Tello on 11/12/2017.
- */
+/** Created by Adrian Tello on 11/12/2017. */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FatJarApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+  classes = FatJarApplication.class,
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 @ContextConfiguration(classes = FatJarApplication.class)
 public abstract class AbstractApiIntegrationTest {
 
-    @LocalServerPort
-    private int port;
+  @LocalServerPort private int port;
 
-    @Autowired
-    private RoomsService roomsService;
+  @Autowired private RoomsService roomsService;
 
-    @Autowired
-    private PersonsService personsService;
+  @Autowired private PersonsService personsService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired private ObjectMapper objectMapper;
 
-    @Autowired
-    private PersonRepository personRepository;
+  @Autowired private PersonRepository personRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
+  @Autowired private RoomRepository roomRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        personRepository.deleteAllInBatch();
-        roomRepository.deleteAllInBatch();
+  @Before
+  public void setUp() throws Exception {
+    personRepository.deleteAllInBatch();
+    roomRepository.deleteAllInBatch();
+  }
+
+  protected ResponseEntity<ImportResultDto> postResource(final String path) {
+    final MultiValueMap<String, Object> multipartRequest = new LinkedMultiValueMap<>();
+
+    final HttpHeaders header = new HttpHeaders();
+    header.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+    final HttpHeaders fileHeader = new HttpHeaders();
+    fileHeader.setContentType(MediaType.parseMediaType("text/csv"));
+
+    final Resource resource = new ClassPathResource(path);
+    final HttpEntity<Resource> importFileEntity = new HttpEntity<>(resource, fileHeader);
+
+    multipartRequest.add("file", importFileEntity);
+
+    final HttpEntity<MultiValueMap<String, Object>> requestEntity =
+        new HttpEntity<>(multipartRequest, header);
+    final RestTemplate restTemplate = new RestTemplate();
+    return restTemplate.postForEntity(
+        getBaseUrl() + "/api/import", requestEntity, ImportResultDto.class);
+  }
+
+  protected ResponseEntity<ImportResultDto> importSitzplanFile() {
+    return postResource("/imports/sitzplan.csv");
+  }
+
+  protected ResponseEntity<ImportResultDto> prepareSitzplanFile() {
+    final ResponseEntity<ImportResultDto> importResultDtoResponseEntity = importSitzplanFile();
+
+    assertEquals(HttpStatus.ACCEPTED, importResultDtoResponseEntity.getStatusCode());
+
+    final ImportResultDto importResultDto = importResultDtoResponseEntity.getBody();
+    assertNotNull(importResultDto);
+    assertEquals(15, importResultDto.getRooms());
+    assertEquals(49, importResultDto.getPersons());
+
+    return importResultDtoResponseEntity;
+  }
+
+  protected int getPort() {
+    return port;
+  }
+
+  protected String getBaseUrl() {
+    return "http://localhost:" + getPort();
+  }
+
+  protected void doTestInvalidMethod(String url) {
+    // Prepare
+    final RestTemplate restTemplate = new RestTemplate();
+    try {
+      // Test
+      restTemplate.postForEntity(getBaseUrl() + url, null, RoomDto.class, Collections.emptyMap());
+
+      // Verify
+      assertTrue(false); // Should never be called
+    } catch (HttpClientErrorException e) {
+      assertEquals(HttpStatus.METHOD_NOT_ALLOWED, e.getStatusCode());
+    }
+  }
+
+  protected void doTestException(Runnable runnable, HttpStatus httpStatus, int expectedBodyCode)
+      throws IOException {
+    try {
+      // Test
+      runnable.run();
+
+      // Verify
+      assertFalse(true); // Should never get called
+    } catch (final HttpClientErrorException clientErrorException) {
+      assertEquals(httpStatus, clientErrorException.getStatusCode());
+
+      final byte[] responseBody = clientErrorException.getResponseBodyAsByteArray();
+      final ExceptionDto exceptionDto = objectMapper.readValue(responseBody, ExceptionDto.class);
+
+      assertNotNull(exceptionDto);
+      assertEquals(expectedBodyCode, exceptionDto.getCode());
+      assertNotNull(exceptionDto.getMessage());
     }
 
-    protected ResponseEntity<ImportResultDto> postResource(final String path) {
-        final MultiValueMap<String, Object> multipartRequest = new LinkedMultiValueMap<>();
+    // No inserts have been done
+    assertNoRoomsInDatabase();
+    assertNoPersonsInDatabase();
+  }
 
-        final HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.MULTIPART_FORM_DATA);
+  protected void assertNoRoomsInDatabase() {
+    final List<Room> roomList = roomsService.findAll();
+    assertNotNull(roomList);
+    assertEquals(0, roomList.size());
+  }
 
-        final HttpHeaders fileHeader = new HttpHeaders();
-        fileHeader.setContentType(MediaType.parseMediaType("text/csv"));
+  protected void assertNoPersonsInDatabase() {
+    final List<Person> personList = personsService.findAll();
+    assertNotNull(personList);
+    assertEquals(0, personList.size());
+  }
 
-        final Resource resource = new ClassPathResource(path);
-        final HttpEntity<Resource> importFileEntity = new HttpEntity<>(resource, fileHeader);
+  protected RoomsService getRoomsService() {
+    return roomsService;
+  }
 
-        multipartRequest.add("file", importFileEntity);
+  protected PersonsService getPersonsService() {
+    return personsService;
+  }
 
-        final HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(multipartRequest, header);
-        final RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity( getBaseUrl() + "/api/import", requestEntity, ImportResultDto.class);
-    }
-
-    protected ResponseEntity<ImportResultDto> importSitzplanFile()
-    {
-        return postResource("/imports/sitzplan.csv");
-    }
-
-    protected ResponseEntity<ImportResultDto> prepareSitzplanFile()
-    {
-        final ResponseEntity<ImportResultDto> importResultDtoResponseEntity = importSitzplanFile();
-
-        assertEquals(HttpStatus.ACCEPTED, importResultDtoResponseEntity.getStatusCode());
-
-        final ImportResultDto importResultDto = importResultDtoResponseEntity.getBody();
-        assertNotNull(importResultDto);
-        assertEquals(15, importResultDto.getRooms());
-        assertEquals(49, importResultDto.getPersons());
-
-        return importResultDtoResponseEntity;
-    }
-
-    protected int getPort() {
-        return port;
-    }
-
-    protected String getBaseUrl(){
-        return "http://localhost:" + getPort();
-    }
-
-    protected void doTestInvalidMethod(String url){
-        //Prepare
-        final RestTemplate restTemplate = new RestTemplate();
-        try{
-            //Test
-            restTemplate.postForEntity(getBaseUrl() + url, null, RoomDto.class, Collections.emptyMap());
-
-            //Verify
-            assertTrue(false); //Should never be called
-        }catch (HttpClientErrorException e){
-            assertEquals(HttpStatus.METHOD_NOT_ALLOWED, e.getStatusCode());
-        }
-    }
-
-    protected void doTestException(Runnable runnable, HttpStatus httpStatus, int expectedBodyCode) throws IOException {
-        try {
-            //Test
-            runnable.run();
-
-            //Verify
-            assertFalse(true); //Should never get called
-        } catch(final HttpClientErrorException clientErrorException){
-            assertEquals(httpStatus, clientErrorException.getStatusCode());
-
-            final byte[] responseBody = clientErrorException.getResponseBodyAsByteArray();
-            final ExceptionDto exceptionDto = objectMapper.readValue(responseBody, ExceptionDto.class);
-
-            assertNotNull(exceptionDto);
-            assertEquals(expectedBodyCode, exceptionDto.getCode());
-            assertNotNull(exceptionDto.getMessage());
-        }
-
-        //No inserts have been done
-        assertNoRoomsInDatabase();
-        assertNoPersonsInDatabase();
-    }
-
-    protected void assertNoRoomsInDatabase() {
-        final List<Room> roomList = roomsService.findAll();
-        assertNotNull(roomList);
-        assertEquals(0, roomList.size());
-    }
-
-    protected void assertNoPersonsInDatabase() {
-        final List<Person> personList = personsService.findAll();
-        assertNotNull(personList);
-        assertEquals(0, personList.size());
-    }
-
-    protected RoomsService getRoomsService() {
-        return roomsService;
-    }
-
-    protected PersonsService getPersonsService() {
-        return personsService;
-    }
-
-    protected ObjectMapper getObjectMapper() {
-        return objectMapper;
-    }
+  protected ObjectMapper getObjectMapper() {
+    return objectMapper;
+  }
 }

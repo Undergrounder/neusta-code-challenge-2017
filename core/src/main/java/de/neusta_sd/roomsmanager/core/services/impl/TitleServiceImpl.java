@@ -8,30 +8,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * Created by Adrian Tello on 09/12/2017.
- */
+/** Created by Adrian Tello on 09/12/2017. */
 @Service
 public class TitleServiceImpl implements TitleService {
 
-    private final TitleRepository titleRepository;
+  private final TitleRepository titleRepository;
 
-    @Autowired
-    public TitleServiceImpl(TitleRepository titleRepository) {
-        this.titleRepository = titleRepository;
-    }
+  @Autowired
+  public TitleServiceImpl(TitleRepository titleRepository) {
+    this.titleRepository = titleRepository;
+  }
 
-    @Override
-    public Optional<Title> getTitle(final String name) {
-        return getTitleRepository().findOneByName(name);
-    }
+  @Override
+  public Optional<Title> getTitle(final String name) {
+    return getTitleRepository().findOneByName(name);
+  }
 
-    @Override
-    public boolean existsTitleByName(String name) {
-        return this.getTitle(name).isPresent();
-    }
+  @Override
+  public boolean existsTitleByName(String name) {
+    return this.getTitle(name).isPresent();
+  }
 
-    protected TitleRepository getTitleRepository() {
-        return titleRepository;
-    }
+  protected TitleRepository getTitleRepository() {
+    return titleRepository;
+  }
 }

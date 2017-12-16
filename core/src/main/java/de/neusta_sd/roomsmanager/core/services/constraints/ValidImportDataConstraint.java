@@ -7,16 +7,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Created by Adrian Telo on 13/12/2017.
- */
+/** Created by Adrian Telo on 13/12/2017. */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy=ValidImportDataConstraintValidator.class)
+@Constraint(validatedBy = ValidImportDataConstraintValidator.class)
 public @interface ValidImportDataConstraint {
-    String message() default "";
+  String message() default "";
 
-    Class<?>[] groups() default { };
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default { };
+  Class<? extends Payload>[] payload() default {};
 }

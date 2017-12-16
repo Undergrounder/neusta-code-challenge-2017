@@ -7,16 +7,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Created by Adrian Tello on 13/12/2017.
- */
+/** Created by Adrian Tello on 13/12/2017. */
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy=RoomNumberConstraintValidator.class)
+@Constraint(validatedBy = RoomNumberConstraintValidator.class)
 public @interface RoomNumberConstraint {
-    String message() default "";
+  String message() default "";
 
-    Class<?>[] groups() default { };
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default { };
+  Class<? extends Payload>[] payload() default {};
 }

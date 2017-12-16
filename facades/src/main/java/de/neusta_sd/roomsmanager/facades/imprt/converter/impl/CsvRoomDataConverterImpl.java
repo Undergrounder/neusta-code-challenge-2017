@@ -10,36 +10,36 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Created by Adrian Tello on 09/12/2017.
- */
+/** Created by Adrian Tello on 09/12/2017. */
 @Component
 public class CsvRoomDataConverterImpl implements CsvRoomDataConverter {
 
-    private CsvPersonDataConverter csvPersonDataConverter;
+  private CsvPersonDataConverter csvPersonDataConverter;
 
-    @Autowired
-    public CsvRoomDataConverterImpl(final CsvPersonDataConverter csvPersonDataConverter) {
-        this.csvPersonDataConverter = csvPersonDataConverter;
-    }
+  @Autowired
+  public CsvRoomDataConverterImpl(final CsvPersonDataConverter csvPersonDataConverter) {
+    this.csvPersonDataConverter = csvPersonDataConverter;
+  }
 
-    @Override
-    public ImportService.RoomData convert(final ImportCsvParser.CsvRoomData source) throws ConversionException {
-        //Get values
-        final String sourceNumber = source.getNumber();
-        final List<ImportCsvParser.CsvPersonData> sourcePersonDataList = source.getPersonDataList();
+  @Override
+  public ImportService.RoomData convert(final ImportCsvParser.CsvRoomData source)
+      throws ConversionException {
+    // Get values
+    final String sourceNumber = source.getNumber();
+    final List<ImportCsvParser.CsvPersonData> sourcePersonDataList = source.getPersonDataList();
 
-        //Convert
-        List<ImportService.PersonData> targetPersonDataList = ConverterUtils.convertAll(sourcePersonDataList, getCsvPersonDataConverter());
+    // Convert
+    List<ImportService.PersonData> targetPersonDataList =
+        ConverterUtils.convertAll(sourcePersonDataList, getCsvPersonDataConverter());
 
-        //Create object
-        return ImportService.RoomData.builder()
-                .number(sourceNumber)
-                .personDataList(targetPersonDataList)
-                .build();
-    }
+    // Create object
+    return ImportService.RoomData.builder()
+        .number(sourceNumber)
+        .personDataList(targetPersonDataList)
+        .build();
+  }
 
-    private CsvPersonDataConverter getCsvPersonDataConverter() {
-        return csvPersonDataConverter;
-    }
+  private CsvPersonDataConverter getCsvPersonDataConverter() {
+    return csvPersonDataConverter;
+  }
 }

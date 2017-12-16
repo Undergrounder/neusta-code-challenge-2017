@@ -5,7 +5,7 @@ plugins {
 group 'de.neusta_sd.roomsmanager.core'
 version '1.0-SNAPSHOT'
 
-dependencies{
+dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile group: 'com.h2database', name: 'h2', version: '1.4.196'
 

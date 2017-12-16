@@ -12,28 +12,23 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Created by Adrian Tello on 05/12/2017.
- */
+/** Created by Adrian Tello on 05/12/2017. */
 @Component
 public class RoomConverterImpl implements RoomConverter {
 
-    private final PersonConverter personConverter;
+  private final PersonConverter personConverter;
 
-    @Autowired
-    public RoomConverterImpl(final PersonConverter personConverter) {
-        this.personConverter = personConverter;
-    }
+  @Autowired
+  public RoomConverterImpl(final PersonConverter personConverter) {
+    this.personConverter = personConverter;
+  }
 
-    @Override
-    public RoomDto convert(final Room source) throws ConversionException {
-        final String roomNumber = source.getNumber();
-        final List<Person> people = source.getPeople();
-        final List<PersonDto> convertedPeople = ConverterUtils.convertAll(people, personConverter);
+  @Override
+  public RoomDto convert(final Room source) throws ConversionException {
+    final String roomNumber = source.getNumber();
+    final List<Person> people = source.getPeople();
+    final List<PersonDto> convertedPeople = ConverterUtils.convertAll(people, personConverter);
 
-        return RoomDto.builder()
-                .room(roomNumber)
-                .people(convertedPeople)
-                .build();
-    }
+    return RoomDto.builder().room(roomNumber).people(convertedPeople).build();
+  }
 }

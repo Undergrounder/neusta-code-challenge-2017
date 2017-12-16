@@ -8,22 +8,20 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-/**
- * Created by Adrian Tello on 01/12/2017.
- */
+/** Created by Adrian Tello on 01/12/2017. */
 @Component
 public class NameAdditionNameConverterImpl implements NameAdditionNameConverter {
 
-    @Autowired
-    private NameAdditionRepository nameAdditionRepository;
+  @Autowired private NameAdditionRepository nameAdditionRepository;
 
-    @Override
-    public NameAddition convert(String source) throws ConversionException {
-        final Optional<NameAddition> nameAdditionOptional = nameAdditionRepository.findOneByName(source);
-        if (!nameAdditionOptional.isPresent()) {
-            throw new ConversionException("No name addition entity found for [" + source + "]");
-        }
-
-        return nameAdditionOptional.get();
+  @Override
+  public NameAddition convert(String source) throws ConversionException {
+    final Optional<NameAddition> nameAdditionOptional =
+        nameAdditionRepository.findOneByName(source);
+    if (!nameAdditionOptional.isPresent()) {
+      throw new ConversionException("No name addition entity found for [" + source + "]");
     }
+
+    return nameAdditionOptional.get();
+  }
 }

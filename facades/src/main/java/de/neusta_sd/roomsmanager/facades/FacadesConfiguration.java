@@ -8,5 +8,4 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import(CoreConfiguration.class)
 @ComponentScan("de.neusta_sd.roomsmanager.facades")
-public class FacadesConfiguration {
-}
+public class FacadesConfiguration {}

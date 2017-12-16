@@ -5,7 +5,7 @@ plugins {
 group 'de.neusta_sd.roomsmanager.facades'
 version '1.0-SNAPSHOT'
 
-dependencies{
+dependencies {
     compile project(':roomsmanager-core')
     compile 'org.apache.commons:commons-csv:1.5'
     testCompile 'junit:junit:4.12'
