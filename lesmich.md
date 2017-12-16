@@ -35,6 +35,17 @@ gradlew test
 ./gradlew test
 ```
 
+## Deployment
+### Fat-Jar
+Fat-Jar-Datei ausführen.
+```
+java -jar roomsmanager-fatjar-1.0-SNAPSHOT.jar
+```
+
+### War
+War-Datei in Tomcat deployen.  
+https://tomcat.apache.org/tomcat-8.0-doc/html-manager-howto.html#Deploy
+
 ## Versionierung
 Wir benutzten [SemVer](https://semver.org/) für die Versionierung.
 
