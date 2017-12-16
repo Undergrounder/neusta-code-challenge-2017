@@ -1,17 +1,16 @@
 package de.neustasd.roomsmanager.fatjar.controllers;
 
+import static org.junit.Assert.assertEquals;
+
 import de.neustasd.roomsmanager.facades.dto.PersonDto;
 import de.neustasd.roomsmanager.facades.dto.RoomDto;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
 
 /** Created by Adrian Tello on 11/12/2017. */
 public class RoomsApiControllerIntegrationTest extends AbstractApiIntegrationTest {

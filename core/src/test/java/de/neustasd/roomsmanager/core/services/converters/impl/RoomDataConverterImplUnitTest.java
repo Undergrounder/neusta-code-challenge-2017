@@ -7,6 +7,7 @@ import de.neustasd.roomsmanager.core.entities.Room;
 import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.converters.Converter;
 import de.neustasd.roomsmanager.core.services.converters.RoomDataConverter;
+import de.neustasd.roomsmanager.core.services.data.RoomData;
 import org.junit.Test;
 
 /** Created by Adrian Tello on 01/12/2017. */
@@ -18,8 +19,8 @@ public class RoomDataConverterImplUnitTest {
   public void testConversion() throws Converter.ConversionException {
     // Prepare
     final String roomNumber = "1234";
-    final ImportService.RoomData roomData =
-        ImportService.RoomData.builder().number(roomNumber).build();
+    final RoomData roomData =
+        RoomData.builder().number(roomNumber).build();
 
     // Test
     final Room room = roomDataConverter.convert(roomData);

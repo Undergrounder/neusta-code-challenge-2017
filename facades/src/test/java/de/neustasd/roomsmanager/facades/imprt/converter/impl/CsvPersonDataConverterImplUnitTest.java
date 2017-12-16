@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import de.neustasd.roomsmanager.core.services.ImportService;
+import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvPersonDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class CsvPersonDataConverterImplUnitTest {
             .build();
 
     // Test
-    final ImportService.PersonData personData = csvPersonDataConverter.convert(csvPersonData);
+    final PersonData personData = csvPersonDataConverter.convert(csvPersonData);
 
     // Verify
     assertNotNull(personData);
@@ -50,7 +50,7 @@ public class CsvPersonDataConverterImplUnitTest {
             .build();
 
     // Test
-    final ImportService.PersonData personData = csvPersonDataConverter.convert(csvPersonData);
+    final PersonData personData = csvPersonDataConverter.convert(csvPersonData);
 
     // Verify
     assertNotNull(personData);

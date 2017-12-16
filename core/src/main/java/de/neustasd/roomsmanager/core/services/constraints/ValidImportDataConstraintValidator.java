@@ -1,6 +1,9 @@
 package de.neustasd.roomsmanager.core.services.constraints;
 
 import de.neustasd.roomsmanager.core.services.ImportService;
+import de.neustasd.roomsmanager.core.services.data.ImportData;
+import de.neustasd.roomsmanager.core.services.data.PersonData;
+import de.neustasd.roomsmanager.core.services.data.RoomData;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +16,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /** Created by adria on 13/12/2017. */
 public class ValidImportDataConstraintValidator
-    implements ConstraintValidator<ValidImportDataConstraint, ImportService.ImportData> {
+    implements ConstraintValidator<ValidImportDataConstraint, ImportData> {
 
   private static final String ROOM_NUMBER_REPEATED_DEFAULT_MSG =
       "Room number \"{0}\" found multiple times.";
@@ -23,9 +26,9 @@ public class ValidImportDataConstraintValidator
   public void initialize(ValidImportDataConstraint constraintAnnotation) {}
 
   @Override
-  public boolean isValid(ImportService.ImportData value, ConstraintValidatorContext context) {
+  public boolean isValid(ImportData value, ConstraintValidatorContext context) {
 
-    final List<ImportService.RoomData> roomDataList = value.getRoomDataList();
+    final List<RoomData> roomDataList = value.getRoomDataList();
 
     final boolean hasNoRepeatedPersons = hasNoRepeatedPersons(roomDataList, context);
     final boolean hasUniqueRoomNumbers = validateUniqueRoomNumber(roomDataList, context);
@@ -34,12 +37,12 @@ public class ValidImportDataConstraintValidator
   }
 
   private boolean validateUniqueRoomNumber(
-      final List<ImportService.RoomData> roomDataList, final ConstraintValidatorContext context) {
+      final List<RoomData> roomDataList, final ConstraintValidatorContext context) {
     boolean isValid = true;
 
     final Set<String> roomNumbersSet = new HashSet<>();
     for (int i = 0; i < roomDataList.size(); i++) {
-      final ImportService.RoomData roomData = roomDataList.get(i);
+      final RoomData roomData = roomDataList.get(i);
 
       final String number = roomData.getNumber();
       if (!roomNumbersSet.add(number)) {
@@ -63,20 +66,20 @@ public class ValidImportDataConstraintValidator
   }
 
   private boolean hasNoRepeatedPersons(
-      final List<ImportService.RoomData> roomDataList, final ConstraintValidatorContext context) {
+      final List<RoomData> roomDataList, final ConstraintValidatorContext context) {
     boolean isValid = true;
 
-    final Map<ImportService.PersonData, Long> numbersCount =
+    final Map<PersonData, Long> numbersCount =
         roomDataList
             .stream()
             .flatMap(roomData -> roomData.getPersonDataList().stream())
             .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-    for (Map.Entry<ImportService.PersonData, Long> personDataCountEntry : numbersCount.entrySet()) {
+    for (Map.Entry<PersonData, Long> personDataCountEntry : numbersCount.entrySet()) {
       final Long count = personDataCountEntry.getValue();
 
       if (count > 1) {
-        final ImportService.PersonData personData = personDataCountEntry.getKey();
+        final PersonData personData = personDataCountEntry.getKey();
 
         isValid = false;
 

@@ -13,6 +13,7 @@ import de.neustasd.roomsmanager.core.services.converters.Converter;
 import de.neustasd.roomsmanager.core.services.converters.NameAdditionNameConverter;
 import de.neustasd.roomsmanager.core.services.converters.PersonDataConverter;
 import de.neustasd.roomsmanager.core.services.converters.TitleNameConverter;
+import de.neustasd.roomsmanager.core.services.data.PersonData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,8 +54,8 @@ public class PersonDataConverterImplUnitTest {
     }
 
     // Test
-    final ImportService.PersonData personData =
-        ImportService.PersonData.builder()
+    final PersonData personData =
+        PersonData.builder()
             .title("Dr.")
             .firstName("Max")
             .nameAddition("von")
@@ -86,8 +87,8 @@ public class PersonDataConverterImplUnitTest {
   @Test
   public void testConvertWithoutNullableFields() throws Converter.ConversionException {
     // Test
-    final ImportService.PersonData personData =
-        ImportService.PersonData.builder()
+    final PersonData personData =
+        PersonData.builder()
             .title("Dr.")
             .firstName("Max")
             .nameAddition("von")

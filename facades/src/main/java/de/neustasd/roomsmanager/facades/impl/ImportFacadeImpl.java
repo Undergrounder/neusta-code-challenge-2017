@@ -3,6 +3,8 @@ package de.neustasd.roomsmanager.facades.impl;
 import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.constraints.RoomNumberConstraint;
 import de.neustasd.roomsmanager.core.services.constraints.ValidImportDataConstraint;
+import de.neustasd.roomsmanager.core.services.data.ImportData;
+import de.neustasd.roomsmanager.core.services.data.ImportResultData;
 import de.neustasd.roomsmanager.facades.ImportFacade;
 import de.neustasd.roomsmanager.facades.converters.ImportResultDataConverter;
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
@@ -51,9 +53,9 @@ public class ImportFacadeImpl implements ImportFacade {
   @Override
   public ImportResultDto importStream(final InputStream inputStream) throws ImportException {
     final ImportCsvParser.CsvImportData csvImportData = parseCsv(inputStream);
-    final ImportService.ImportData importData = getCsvImportDataConverter().convert(csvImportData);
+    final ImportData importData = getCsvImportDataConverter().convert(csvImportData);
 
-    final ImportService.ImportResultData importResultData = doImport(importData);
+    final ImportResultData importResultData = doImport(importData);
 
     return getImportResultDataConverter().convert(importResultData);
   }
@@ -67,7 +69,7 @@ public class ImportFacadeImpl implements ImportFacade {
     }
   }
 
-  private ImportService.ImportResultData doImport(ImportService.ImportData importData)
+  private ImportResultData doImport(ImportData importData)
       throws ImportException {
     try {
       return getImportService().importData(importData);
@@ -81,11 +83,11 @@ public class ImportFacadeImpl implements ImportFacade {
   }
 
   private ImportValidationFailedException.FailedValidation mapInvalidImportData(
-      final Collection<ConstraintViolation<ImportService.ImportData>> constraintViolations) {
+      final Collection<ConstraintViolation<ImportData>> constraintViolations) {
     ImportValidationFailedException.FailedValidation failedValidation =
         ImportValidationFailedException.FailedValidation.OTHER;
 
-    for (ConstraintViolation<ImportService.ImportData> constraintViolation : constraintViolations) {
+    for (ConstraintViolation<ImportData> constraintViolation : constraintViolations) {
       ConstraintDescriptor<? extends Annotation> constraintDescriptor =
           constraintViolation.getConstraintDescriptor();
 

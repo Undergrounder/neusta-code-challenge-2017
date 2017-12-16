@@ -1,5 +1,10 @@
 package de.neustasd.roomsmanager.fatjar.controllers;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neustasd.roomsmanager.core.entities.Person;
 import de.neustasd.roomsmanager.core.entities.Room;
@@ -11,6 +16,9 @@ import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 import de.neustasd.roomsmanager.facades.dto.RoomDto;
 import de.neustasd.roomsmanager.fatjar.FatJarApplication;
 import de.neustasd.roomsmanager.frontend.dto.ExceptionDto;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +26,17 @@ import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /** Created by Adrian Tello on 11/12/2017. */
 @RunWith(SpringRunner.class)

@@ -19,19 +19,19 @@ core <- facades <- frontend <-|
 * war: "Web application Archive"-Anwendung
   * Kann in Tomcat 8 deployed werden.
   
-## Tests ausführen
+## Tests und statische Code-Analysen ausführen
 Die Anforderungen des Projektes werden mit Integrationtests getestet.  
-Um Bugs zu vermeiden und die Entwicklung schneller zu machen, benutzten wir auch Unit-Tests.
+Um Bugs zu vermeiden und die Entwicklung schneller zu machen, benutzten wir auch Unit-Tests und statische Code-Analysen.
 
 ```
-gradlew test
+gradlew test jacocoTestReport
 ```
 
 ## Deployment
 ### Fat-Jar
 Fat-Jar-Datei ausführen.
 ```
-java -jar roomsmanager-fatjar-1.0-SNAPSHOT.jar
+java -jar roomsmanager-fatjar-1.0.jar
 ```
 
 ### War

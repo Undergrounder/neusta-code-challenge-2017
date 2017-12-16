@@ -3,10 +3,10 @@ package de.neustasd.roomsmanager.core.services.converters.impl;
 import de.neustasd.roomsmanager.core.entities.NameAddition;
 import de.neustasd.roomsmanager.core.entities.Person;
 import de.neustasd.roomsmanager.core.entities.Title;
-import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.converters.NameAdditionNameConverter;
 import de.neustasd.roomsmanager.core.services.converters.PersonDataConverter;
 import de.neustasd.roomsmanager.core.services.converters.TitleNameConverter;
+import de.neustasd.roomsmanager.core.services.data.PersonData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class PersonDataConverterImpl implements PersonDataConverter {
   }
 
   @Override
-  public Person convert(ImportService.PersonData source) throws ConversionException {
+  public Person convert(PersonData source) throws ConversionException {
     final Person target = new Person();
     target.setFirstName(source.getFirstName());
     target.setLastName(source.getLastName());

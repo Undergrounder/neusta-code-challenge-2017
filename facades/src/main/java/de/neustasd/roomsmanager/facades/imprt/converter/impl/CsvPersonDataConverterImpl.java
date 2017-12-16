@@ -1,6 +1,6 @@
 package de.neustasd.roomsmanager.facades.imprt.converter.impl;
 
-import de.neustasd.roomsmanager.core.services.ImportService;
+import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvPersonDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CsvPersonDataConverterImpl implements CsvPersonDataConverter {
   @Override
-  public ImportService.PersonData convert(final ImportCsvParser.CsvPersonData source)
+  public PersonData convert(final ImportCsvParser.CsvPersonData source)
       throws ConversionException {
-    return ImportService.PersonData.builder()
+    return PersonData.builder()
         .title(source.getTitle())
         .firstName(source.getFirstName())
         .nameAddition(source.getNameAddition())

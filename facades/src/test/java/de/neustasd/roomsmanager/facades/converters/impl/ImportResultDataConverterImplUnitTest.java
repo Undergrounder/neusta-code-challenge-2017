@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import de.neustasd.roomsmanager.core.services.ImportService;
+import de.neustasd.roomsmanager.core.services.data.ImportResultData;
 import de.neustasd.roomsmanager.facades.converters.ImportResultDataConverter;
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 import org.junit.Test;
@@ -16,8 +17,8 @@ public class ImportResultDataConverterImplUnitTest {
   @Test
   public void testConversion() {
     // Prepare
-    ImportService.ImportResultData importResultData =
-        ImportService.ImportResultData.builder().rooms(15).persons(49).build();
+    ImportResultData importResultData =
+        ImportResultData.builder().rooms(15).persons(49).build();
 
     // Test
     final ImportResultDto importResultDto = importResultDataConverter.convert(importResultData);

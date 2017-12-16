@@ -20,6 +20,7 @@ subprojects {
     apply plugin: 'pmd'
     apply plugin: 'findbugs'
     apply plugin: 'checkstyle'
+    apply plugin: "jacoco"
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -32,5 +33,21 @@ subprojects {
     checkstyle {
         configFile = rootProject.file('checkstyle/checkstyle.xml')
         toolVersion = 8.5
+    }
+
+    jacoco {
+        toolVersion = "0.7.9"
+    }
+
+    test{
+        jacoco {
+            excludes = ['*Data']
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled true
+        }
     }
 }

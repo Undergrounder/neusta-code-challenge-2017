@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import de.neustasd.roomsmanager.core.services.ImportService;
+import de.neustasd.roomsmanager.core.services.data.ImportData;
+import de.neustasd.roomsmanager.core.services.data.RoomData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvImportDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvRoomDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
@@ -35,12 +36,12 @@ public class CsvImportDataConverterImplUnitTest {
         ImportCsvParser.CsvImportData.builder().build();
 
     // Test
-    final ImportService.ImportData importData = csvImportDataConverter.convert(csvImportDataSource);
+    final ImportData importData = csvImportDataConverter.convert(csvImportDataSource);
 
     // Verify
     assertNotNull(importData);
 
-    final List<ImportService.RoomData> roomDataList = importData.getRoomDataList();
+    final List<RoomData> roomDataList = importData.getRoomDataList();
     assertNotNull(roomDataList);
 
     assertEquals(0, roomDataList.size());
@@ -55,10 +56,10 @@ public class CsvImportDataConverterImplUnitTest {
         ImportCsvParser.CsvRoomData.builder().number("1112").build();
 
     // Dummy results
-    final ImportService.RoomData roomData1 =
-        ImportService.RoomData.builder().number("1111").build();
-    final ImportService.RoomData roomData2 =
-        ImportService.RoomData.builder().number("1112").build();
+    final RoomData roomData1 =
+        RoomData.builder().number("1111").build();
+    final RoomData roomData2 =
+        RoomData.builder().number("1112").build();
 
     when(csvRoomDataConverter.convert(csvRoomData1)).thenReturn(roomData1);
     when(csvRoomDataConverter.convert(csvRoomData2)).thenReturn(roomData2);
@@ -70,12 +71,12 @@ public class CsvImportDataConverterImplUnitTest {
             .build();
 
     // Test
-    final ImportService.ImportData importData = csvImportDataConverter.convert(csvImportDataSource);
+    final ImportData importData = csvImportDataConverter.convert(csvImportDataSource);
 
     // Verify
     assertNotNull(importData);
 
-    final List<ImportService.RoomData> roomDataList = importData.getRoomDataList();
+    final List<RoomData> roomDataList = importData.getRoomDataList();
     assertNotNull(roomDataList);
 
     assertEquals(2, roomDataList.size());

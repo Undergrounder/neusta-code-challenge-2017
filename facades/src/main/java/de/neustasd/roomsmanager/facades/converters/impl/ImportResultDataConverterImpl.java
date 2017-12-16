@@ -1,6 +1,6 @@
 package de.neustasd.roomsmanager.facades.converters.impl;
 
-import de.neustasd.roomsmanager.core.services.ImportService;
+import de.neustasd.roomsmanager.core.services.data.ImportResultData;
 import de.neustasd.roomsmanager.facades.converters.ImportResultDataConverter;
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImportResultDataConverterImpl implements ImportResultDataConverter {
   @Override
-  public ImportResultDto convert(ImportService.ImportResultData source) throws ConversionException {
+  public ImportResultDto convert(ImportResultData source) throws ConversionException {
     return ImportResultDto.builder().rooms(source.getRooms()).persons(source.getPersons()).build();
   }
 }

@@ -1,7 +1,8 @@
 package de.neustasd.roomsmanager.facades.imprt.converter.impl;
 
-import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.converters.ConverterUtils;
+import de.neustasd.roomsmanager.core.services.data.ImportData;
+import de.neustasd.roomsmanager.core.services.data.RoomData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvImportDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvRoomDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
@@ -21,13 +22,13 @@ public class CsvImportDataConverterImpl implements CsvImportDataConverter {
   }
 
   @Override
-  public ImportService.ImportData convert(final ImportCsvParser.CsvImportData source)
+  public ImportData convert(final ImportCsvParser.CsvImportData source)
       throws ConversionException {
     final List<ImportCsvParser.CsvRoomData> sourceRoomDataList = source.getRoomDataList();
-    final List<ImportService.RoomData> roomDataList =
+    final List<RoomData> roomDataList =
         ConverterUtils.convertAll(sourceRoomDataList, getCsvRoomDataConverter());
 
-    return ImportService.ImportData.builder().roomDataList(roomDataList).build();
+    return ImportData.builder().roomDataList(roomDataList).build();
   }
 
   private CsvRoomDataConverter getCsvRoomDataConverter() {

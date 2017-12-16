@@ -1,19 +1,23 @@
 package de.neustasd.roomsmanager.frontend.controllers;
 
+import static de.neustasd.roomsmanager.frontend.controllers.ImportApiController.BASE_PATH;
+
 import de.neustasd.roomsmanager.facades.ImportFacade;
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 import de.neustasd.roomsmanager.frontend.controllers.exceptions.MethodNotAllowedException;
 import de.neustasd.roomsmanager.frontend.dto.ExceptionDto;
+import java.io.IOException;
+import java.io.InputStream;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import static de.neustasd.roomsmanager.frontend.controllers.ImportApiController.BASE_PATH;
 
 /** Created by Adrian Tello on 09/12/2017. */
 @RestController
