@@ -35,7 +35,7 @@ java -jar roomsmanager-fatjar-1.0-SNAPSHOT.jar
 ```
 
 ### War
-War-Datei in Tomcat deployen.  
+War-Datei in Tomcat deployen.
 https://tomcat.apache.org/tomcat-8.0-doc/html-manager-howto.html#Deploy
 
 ## Entwicklung
@@ -51,6 +51,19 @@ Die generierte Java-Dokumentation kann in diesen Verzeichnissen gefunden werden:
 * /frontend/build/docs/javadoc
 * /fatjar/build/docs/javadoc
 * /war/build/docs/javadoc
+
+### Bauen
+```
+gradlew build
+```
+Relevante Artifakte:
+* /fatjar/build/libs/roomsmanager-fatjar-1.0.jar
+* /war/build/libs/roomsmanager-war-1.0.war
+
+### Bauen und ausführen
+```
+gradlew :roomsmanager-war:bootRun
+```
 
 ## Versionierung
 Wir benutzen [SemVer](https://semver.org/) für die Versionierung.
