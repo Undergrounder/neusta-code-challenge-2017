@@ -66,8 +66,8 @@ Die generierte Java-Dokumentation kann in diesen Verzeichnissen gefunden werden:
 gradlew build
 ```
 Relevante Artifakte:
-* /fatjar/build/libs/roomsmanager-fatjar-1.0.jar
-* /war/build/libs/roomsmanager-war-1.0.war
+* /fatjar/build/libs/roomsmanager-fatjar-1.0-SNAPSHOT.jar
+* /war/build/libs/roomsmanager-war-1.0-SNAPSHOT.war
 
 ### Bauen und ausführen
 ```
