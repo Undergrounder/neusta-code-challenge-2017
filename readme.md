@@ -27,6 +27,14 @@ Um Bugs zu vermeiden und die Entwicklung schneller zu machen, benutzten wir auch
 gradlew test jacocoTestReport
 ```
 
+Die Reports können in folgenden Verzeichnissen gefunden werden:
+* /core/build/reports
+* /facades/build/reports
+* /frontend/build/reports
+* /fatjar/build/reports
+* /war/build/reports
+
+
 ## Deployment
 Das Datenbank wird sich beim Starten in dem Verzeichnis `~/roomsmanager` erstellen.
 ### Fat-Jar
