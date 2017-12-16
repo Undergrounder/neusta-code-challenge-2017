@@ -1,4 +1,4 @@
-group 'de.neusta_sd.roomsmanager'
+group 'de.neustasd.roomsmanager'
 version '1.0'
 
 subprojects {

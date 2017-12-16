@@ -1,4 +1,4 @@
-group 'de.neusta_sd.roomsmanager.fatjar'
+group 'de.neustasd.roomsmanager.fatjar'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'org.springframework.boot'

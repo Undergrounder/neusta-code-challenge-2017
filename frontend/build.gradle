@@ -2,7 +2,7 @@ plugins {
     id 'io.franzbecker.gradle-lombok' version '1.11'
 }
 
-group 'de.neusta_sd.roomsmanager.frontend'
+group 'de.neustasd.roomsmanager.frontend'
 version '1.0-SNAPSHOT'
 
 dependencies {

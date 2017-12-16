@@ -1,4 +1,4 @@
-group 'de.neusta_sd.roomsmanager.war'
+group 'de.neustasd.roomsmanager.war'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'war'
