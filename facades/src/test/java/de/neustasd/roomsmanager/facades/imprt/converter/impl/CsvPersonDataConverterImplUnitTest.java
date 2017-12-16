@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvPersonDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 import org.junit.Test;
 
 /** Created by Adrian Tello on 09/12/2017. */
@@ -17,8 +18,8 @@ public class CsvPersonDataConverterImplUnitTest {
   @Test
   public void test1() {
     // Prepare
-    final ImportCsvParser.CsvPersonData csvPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData csvPersonData =
+            CsvPersonData.builder()
             .firstName("Firstname")
             .lastName("Lastname")
             .ldapUser("ldapuser")
@@ -40,8 +41,8 @@ public class CsvPersonDataConverterImplUnitTest {
   @Test
   public void test2() {
     // Prepare
-    final ImportCsvParser.CsvPersonData csvPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData csvPersonData =
+        CsvPersonData.builder()
             .title("Dr.")
             .firstName("Firstname")
             .nameAddition("von")

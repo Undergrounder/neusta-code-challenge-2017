@@ -9,6 +9,8 @@ import de.neustasd.roomsmanager.core.services.data.RoomData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvPersonDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvRoomDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvRoomData;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +34,8 @@ public class CsvRoomDataConverterImplUnitTest {
   @Test
   public void testEmptyRoom() {
     // Prepare
-    final ImportCsvParser.CsvRoomData csvRoomData =
-        ImportCsvParser.CsvRoomData.builder().number("1234").build();
+    final CsvRoomData csvRoomData =
+        CsvRoomData.builder().number("1234").build();
 
     // Test
     final RoomData roomData = csvRoomDataConverter.convert(csvRoomData);
@@ -50,22 +52,22 @@ public class CsvRoomDataConverterImplUnitTest {
   @Test
   public void testRoom() {
     // Prepare
-    final ImportCsvParser.CsvPersonData csvPersonData1 =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData csvPersonData1 =
+            CsvPersonData.builder()
             .firstName("Adrian")
             .lastName("Tello")
             .ldapUser("a.lasheras")
             .build();
-    final ImportCsvParser.CsvPersonData csvPersonData2 =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData csvPersonData2 =
+            CsvPersonData.builder()
             .title("Dr.")
             .firstName("Vorname")
             .lastName("Nachname")
             .ldapUser("vorname.nachname")
             .build();
 
-    final ImportCsvParser.CsvRoomData csvRoomData =
-        ImportCsvParser.CsvRoomData.builder()
+    final CsvRoomData csvRoomData =
+            CsvRoomData.builder()
             .number("1234")
             .personData(csvPersonData1)
             .personData(csvPersonData2)

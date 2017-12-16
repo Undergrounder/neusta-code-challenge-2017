@@ -9,6 +9,7 @@ import de.neustasd.roomsmanager.core.services.TitleService;
 import de.neustasd.roomsmanager.core.services.converters.Converter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.PersonStringConverter;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,7 +67,7 @@ public class PersonStringConverterImplUnitTest {
         final String personString = "Dennis Fischer (dfischer)";
 
         // Test
-        final ImportCsvParser.CsvPersonData csvPersonData = personStringConverter.convert(personString);
+        final CsvPersonData csvPersonData = personStringConverter.convert(personString);
 
         // Verify
         assertConversion(csvPersonData, null, "Dennis", null, "Fischer", "dfischer");
@@ -78,7 +79,7 @@ public class PersonStringConverterImplUnitTest {
         final String personString = "Iftikar Ahmad Khan (ikhan)";
 
         // Test
-        final ImportCsvParser.CsvPersonData csvPersonData = personStringConverter.convert(personString);
+        final CsvPersonData csvPersonData = personStringConverter.convert(personString);
 
         // Verify
         assertConversion(csvPersonData, null, "Iftikar Ahmad", null, "Khan", "ikhan");
@@ -90,7 +91,7 @@ public class PersonStringConverterImplUnitTest {
         final String personString = "Alexander James Cole (acole)";
 
         // Test
-        final ImportCsvParser.CsvPersonData csvPersonData = personStringConverter.convert(personString);
+        final CsvPersonData csvPersonData = personStringConverter.convert(personString);
 
         // Verify
         assertConversion(csvPersonData, null, "Alexander James", null, "Cole", "acole");
@@ -104,7 +105,7 @@ public class PersonStringConverterImplUnitTest {
         when(nameAdditionService.existsNameAddition("von")).thenReturn(true);
 
         // Test
-        final ImportCsvParser.CsvPersonData csvPersonData = personStringConverter.convert(personString);
+        final CsvPersonData csvPersonData = personStringConverter.convert(personString);
 
         // Verify
         assertConversion(csvPersonData, null, "Thomas", "von", "Gostomski", "tgostomski");
@@ -118,7 +119,7 @@ public class PersonStringConverterImplUnitTest {
         when(nameAdditionService.existsNameAddition("de")).thenReturn(true);
 
         // Test
-        final ImportCsvParser.CsvPersonData csvPersonData = personStringConverter.convert(personString);
+        final CsvPersonData csvPersonData = personStringConverter.convert(personString);
 
         // Verify
         assertConversion(csvPersonData, null, "Etienne", "de", "Ruffray", "eruffray");
@@ -132,14 +133,14 @@ public class PersonStringConverterImplUnitTest {
         when(titleService.existsTitleByName("Dr.")).thenReturn(true);
 
         // Test
-        final ImportCsvParser.CsvPersonData csvPersonData = personStringConverter.convert(personString);
+        final CsvPersonData csvPersonData = personStringConverter.convert(personString);
 
         // Verify
         assertConversion(csvPersonData, "Dr.", "Dennis", null, "Krannich", "dkrannich");
     }
 
     private void assertConversion(
-        final ImportCsvParser.CsvPersonData csvPersonData,
+        final CsvPersonData csvPersonData,
         final String title,
         final String firstName,
         final String nameAddition,

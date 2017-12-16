@@ -4,6 +4,7 @@ import de.neustasd.roomsmanager.core.services.NameAdditionService;
 import de.neustasd.roomsmanager.core.services.TitleService;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.PersonStringConverter;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class PersonStringConverterImpl implements PersonStringConverter {
   }
 
   @Override
-  public ImportCsvParser.CsvPersonData convert(final String source) throws ConversionException {
+  public CsvPersonData convert(final String source) throws ConversionException {
     // Simple validation
     if (StringUtils.isEmpty(source)) {
       throw new ConversionException("Can't convert from an empty or null value.");
@@ -44,10 +45,10 @@ public class PersonStringConverterImpl implements PersonStringConverter {
     return convert(splittedSourceList);
   }
 
-  private ImportCsvParser.CsvPersonData convert(List<String> splittedSource) {
+  private CsvPersonData convert(List<String> splittedSource) {
     // Extracts parts
-    final ImportCsvParser.CsvPersonData.CsvPersonDataBuilder builder =
-        ImportCsvParser.CsvPersonData.builder();
+    final CsvPersonData.CsvPersonDataBuilder builder =
+        CsvPersonData.builder();
 
     // Extract ldapUser
     {

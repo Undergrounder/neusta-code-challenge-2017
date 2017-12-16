@@ -2,6 +2,9 @@ package de.neustasd.roomsmanager.facades.imprt.csv.parser.impl;
 
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.PersonStringConverter;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvRoomData;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

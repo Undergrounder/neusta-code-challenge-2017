@@ -6,6 +6,9 @@ import static org.mockito.Mockito.when;
 
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.converter.PersonStringConverter;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvPersonData;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvRoomData;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +39,7 @@ public class ImportCsvParserImplUnitTest {
     // Prepare
     try (InputStream inputStream = createInputStream("")) {
       // Test
-      final ImportCsvParser.CsvImportData csvImportData = importCsvParser.parse(inputStream);
+      final CsvImportData csvImportData = importCsvParser.parse(inputStream);
 
       // Verify
       assertNotNull(csvImportData);
@@ -50,23 +53,23 @@ public class ImportCsvParserImplUnitTest {
     // Prepare
     try (InputStream inputStream = createInputStream("1102,,,,")) {
       // Test
-      final ImportCsvParser.CsvImportData csvImportData = importCsvParser.parse(inputStream);
+      final CsvImportData csvImportData = importCsvParser.parse(inputStream);
 
       // Verify
       assertNotNull(csvImportData);
 
-      final List<ImportCsvParser.CsvRoomData> roomDataList = csvImportData.getRoomDataList();
+      final List<CsvRoomData> roomDataList = csvImportData.getRoomDataList();
       assertNotNull(roomDataList);
 
       assertEquals(1, roomDataList.size());
 
-      final ImportCsvParser.CsvRoomData roomData = roomDataList.get(0);
+      final CsvRoomData roomData = roomDataList.get(0);
       assertNotNull(roomData);
 
       assertEquals("1102", roomData.getNumber());
 
       // Persons list
-      final List<ImportCsvParser.CsvPersonData> csvPersonDataList = roomData.getPersonDataList();
+      final List<CsvPersonData> csvPersonDataList = roomData.getPersonDataList();
       assertNotNull(csvPersonDataList);
 
       assertEquals(0, csvPersonDataList.size());
@@ -76,8 +79,8 @@ public class ImportCsvParserImplUnitTest {
   @Test
   public void testMultiline() throws ImportCsvParser.CsvParsingException, IOException {
     // Prepare
-    final ImportCsvParser.CsvPersonData sborcherdingPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData sborcherdingPersonData =
+        CsvPersonData.builder()
             .firstName("Stefanie")
             .lastName("Borcherding")
             .ldapUser("sborcherding")
@@ -85,40 +88,40 @@ public class ImportCsvParserImplUnitTest {
     when(personStringConverter.convert("Stefanie Borcherding (sborcherding)"))
         .thenReturn(sborcherdingPersonData);
 
-    final ImportCsvParser.CsvPersonData thahnPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData thahnPersonData =
+        CsvPersonData.builder()
             .firstName("Tobias")
             .lastName("Hahn")
             .ldapUser("thahn")
             .build();
     when(personStringConverter.convert("Tobias Hahn (thahn)")).thenReturn(thahnPersonData);
 
-    final ImportCsvParser.CsvPersonData delmPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData delmPersonData =
+            CsvPersonData.builder()
             .firstName("Dominik")
             .lastName("Elm")
             .ldapUser("delm")
             .build();
     when(personStringConverter.convert("Dominik Elm (delm)")).thenReturn(delmPersonData);
 
-    final ImportCsvParser.CsvPersonData kweslingPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData kweslingPersonData =
+            CsvPersonData.builder()
             .firstName("Kai")
             .lastName("Wesling")
             .ldapUser("kwesling")
             .build();
     when(personStringConverter.convert("Kai Wesling (kwesling)")).thenReturn(kweslingPersonData);
 
-    final ImportCsvParser.CsvPersonData tkrusePersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData tkrusePersonData =
+            CsvPersonData.builder()
             .firstName("Thomas")
             .lastName("Kruse")
             .ldapUser("tkruse")
             .build();
     when(personStringConverter.convert("Thomas Kruse (tkruse)")).thenReturn(tkrusePersonData);
 
-    final ImportCsvParser.CsvPersonData cschuettePersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData cschuettePersonData =
+            CsvPersonData.builder()
             .firstName("Carsten")
             .lastName("Schütte")
             .ldapUser("cschuette")
@@ -126,16 +129,16 @@ public class ImportCsvParserImplUnitTest {
     when(personStringConverter.convert("Carsten Schütte (cschuette)"))
         .thenReturn(cschuettePersonData);
 
-    final ImportCsvParser.CsvPersonData celfersPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData celfersPersonData =
+            CsvPersonData.builder()
             .firstName("Carsten")
             .lastName("Elfers")
             .ldapUser("celfers")
             .build();
     when(personStringConverter.convert("Carsten Elfers (celfers)")).thenReturn(celfersPersonData);
 
-    final ImportCsvParser.CsvPersonData ndyminiPersonData =
-        ImportCsvParser.CsvPersonData.builder()
+    final CsvPersonData ndyminiPersonData =
+            CsvPersonData.builder()
             .firstName("Nicole")
             .lastName("Dymini")
             .ldapUser("ndymini")
@@ -148,12 +151,12 @@ public class ImportCsvParserImplUnitTest {
                 + "1108,Kai Wesling (kwesling),Thomas Kruse (tkruse),,\n"
                 + "1107,Carsten Schütte (cschuette),Carsten Elfers (celfers),Nicole Dymini (ndymini),")) {
       // Test
-      final ImportCsvParser.CsvImportData csvImportData = importCsvParser.parse(inputStream);
+      final CsvImportData csvImportData = importCsvParser.parse(inputStream);
 
       // Verify
       assertNotNull(csvImportData);
 
-      final List<ImportCsvParser.CsvRoomData> roomDataList = csvImportData.getRoomDataList();
+      final List<CsvRoomData> roomDataList = csvImportData.getRoomDataList();
       assertNotNull(roomDataList);
 
       assertEquals(3, roomDataList.size());
@@ -177,9 +180,9 @@ public class ImportCsvParserImplUnitTest {
   }
 
   private void assertRoom(
-      ImportCsvParser.CsvRoomData csvRoomData,
+      CsvRoomData csvRoomData,
       String expectedRoomNumber,
-      List<ImportCsvParser.CsvPersonData> csvPersonData) {
+      List<CsvPersonData> csvPersonData) {
     assertNotNull(csvPersonData);
 
     assertEquals(expectedRoomNumber, csvRoomData.getNumber());

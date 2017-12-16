@@ -6,6 +6,8 @@ import de.neustasd.roomsmanager.core.services.data.RoomData;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvImportDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvRoomDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvRoomData;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,9 +24,9 @@ public class CsvImportDataConverterImpl implements CsvImportDataConverter {
   }
 
   @Override
-  public ImportData convert(final ImportCsvParser.CsvImportData source)
+  public ImportData convert(final CsvImportData source)
       throws ConversionException {
-    final List<ImportCsvParser.CsvRoomData> sourceRoomDataList = source.getRoomDataList();
+    final List<CsvRoomData> sourceRoomDataList = source.getRoomDataList();
     final List<RoomData> roomDataList =
         ConverterUtils.convertAll(sourceRoomDataList, getCsvRoomDataConverter());
 

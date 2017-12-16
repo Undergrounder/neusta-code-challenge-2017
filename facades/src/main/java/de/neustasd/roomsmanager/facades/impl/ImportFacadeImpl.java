@@ -10,6 +10,7 @@ import de.neustasd.roomsmanager.facades.converters.ImportResultDataConverter;
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
 import de.neustasd.roomsmanager.facades.imprt.converter.CsvImportDataConverter;
 import de.neustasd.roomsmanager.facades.imprt.csv.parser.ImportCsvParser;
+import de.neustasd.roomsmanager.facades.imprt.csv.parser.data.CsvImportData;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -52,7 +53,7 @@ public class ImportFacadeImpl implements ImportFacade {
 
   @Override
   public ImportResultDto importStream(final InputStream inputStream) throws ImportException {
-    final ImportCsvParser.CsvImportData csvImportData = parseCsv(inputStream);
+    final CsvImportData csvImportData = parseCsv(inputStream);
     final ImportData importData = getCsvImportDataConverter().convert(csvImportData);
 
     final ImportResultData importResultData = doImport(importData);
@@ -60,7 +61,7 @@ public class ImportFacadeImpl implements ImportFacade {
     return getImportResultDataConverter().convert(importResultData);
   }
 
-  private ImportCsvParser.CsvImportData parseCsv(final InputStream inputStream)
+  private CsvImportData parseCsv(final InputStream inputStream)
       throws ImportException {
     try {
       return getImportCsvParser().parse(inputStream);
