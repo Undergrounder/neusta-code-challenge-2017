@@ -1,7 +1,7 @@
 group 'de.neusta_sd.roomsmanager'
-version '1.0-SNAPSHOT'
+version '1.0'
 
-subprojects{
+subprojects {
     buildscript {
         repositories {
             mavenCentral()
@@ -19,12 +19,18 @@ subprojects{
     apply plugin: 'java'
     apply plugin: 'pmd'
     apply plugin: 'findbugs'
+    apply plugin: 'checkstyle'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    dependencies{
+    dependencies {
         compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
         compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
+    }
+
+    checkstyle {
+        configFile = rootProject.file('checkstyle/checkstyle.xml')
+        toolVersion = 8.5
     }
 }
