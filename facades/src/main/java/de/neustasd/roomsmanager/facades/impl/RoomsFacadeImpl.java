@@ -22,6 +22,13 @@ public class RoomsFacadeImpl implements RoomsFacade {
 
   private final RoomsConverter roomsConverter;
 
+  /**
+   * Constructor
+   *
+   * @param roomsService RoomsService
+   * @param roomConverter Room converter
+   * @param roomsConverter Rooms converter
+   */
   public RoomsFacadeImpl(
       RoomsService roomsService, RoomConverter roomConverter, RoomsConverter roomsConverter) {
     this.roomsService = roomsService;

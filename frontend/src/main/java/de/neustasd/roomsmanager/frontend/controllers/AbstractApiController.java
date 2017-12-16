@@ -13,6 +13,13 @@ public abstract class AbstractApiController {
   private static final String NOT_FOUND_MESSAGE = "Not Found";
   private static final String METHOD_NOT_ALLOWED_MESSAGE = "Method not allowed";
 
+  /**
+   * Exception handler for the api calls.
+   *
+   * @param e The exception thrown
+   *
+   * @return The response entity with the resolved ExceptionDto
+   */
   @ExceptionHandler(value = {Exception.class})
   public ResponseEntity<ExceptionDto> exceptionHandler(final Exception e) {
     if (e instanceof NoHandlerFoundException || e instanceof NotFoundException) {

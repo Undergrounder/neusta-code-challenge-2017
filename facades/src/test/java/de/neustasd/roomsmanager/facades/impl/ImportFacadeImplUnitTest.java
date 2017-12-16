@@ -33,6 +33,11 @@ public class ImportFacadeImplUnitTest {
 
   @Mock private ImportResultDataConverter importResultDataConverter;
 
+  /**
+   * SetUp test
+   *
+   * @throws Exception
+   */
   @Before
   public void setUp() throws Exception {
     importFacade =

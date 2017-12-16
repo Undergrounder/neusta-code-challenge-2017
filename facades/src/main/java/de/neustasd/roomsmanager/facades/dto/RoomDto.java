@@ -16,10 +16,10 @@ import lombok.Value;
 @Builder
 @Value
 public class RoomDto {
-  /** Room number */
+  /** Room number. */
   @NonNull private String room;
 
-  /** People in the room */
+  /** People in the room. */
   @NonNull
   @Singular("person")
   private List<PersonDto> people;

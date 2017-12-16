@@ -35,6 +35,15 @@ public class ImportServiceImpl implements ImportService {
 
   private final PersonDataConverter personDataConverter;
 
+  /**
+   * Constructor.
+   *
+   * @param validator Bean validator
+   * @param roomRepository Room repository
+   * @param personRepository Person repository
+   * @param roomDataConverter RoomData converter
+   * @param personDataConverter PersonData converter
+   */
   @Autowired
   public ImportServiceImpl(
       Validator validator,

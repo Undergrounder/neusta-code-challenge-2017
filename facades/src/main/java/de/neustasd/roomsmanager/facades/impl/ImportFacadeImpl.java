@@ -43,6 +43,14 @@ public class ImportFacadeImpl implements ImportFacade {
 
   private ImportResultDataConverter importResultDataConverter;
 
+  /**
+   * Constructor
+   *
+   * @param importCsvParser Import csv parser
+   * @param csvImportDataConverter CsvImportData converter
+   * @param importService ImportService instance
+   * @param importResultDataConverter ImportResultData converter
+   */
   @Autowired
   public ImportFacadeImpl(
       ImportCsvParser importCsvParser,

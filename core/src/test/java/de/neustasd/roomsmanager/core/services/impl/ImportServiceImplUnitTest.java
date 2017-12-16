@@ -48,6 +48,11 @@ public class ImportServiceImplUnitTest {
 
   @Mock private PersonDataConverter personDataConverter;
 
+  /**
+   * SetUp test
+   *
+   * @throws Exception
+   */
   @Before
   public void setUp() throws Exception {
     importService =

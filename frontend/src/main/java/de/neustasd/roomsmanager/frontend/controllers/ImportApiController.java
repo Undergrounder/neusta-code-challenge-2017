@@ -33,6 +33,16 @@ public class ImportApiController extends AbstractApiController {
     this.importFacade = importFacade;
   }
 
+  /**
+   * Rest-Endpoint for importing the rooms CSV-File (POST)
+   *
+   * @param file The CSV-File
+   *
+   * @return The import summary
+   *
+   * @throws IOException
+   * @throws ImportFacade.ImportException An error happened while importing
+   */
   @RequestMapping(
     consumes = "multipart/form-data",
     method = RequestMethod.POST,

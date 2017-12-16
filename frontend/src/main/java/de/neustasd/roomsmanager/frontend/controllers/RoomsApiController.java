@@ -28,7 +28,7 @@ public class RoomsApiController extends AbstractApiController {
   @Autowired private RoomsFacade roomsFacade;
 
   /**
-   * Get a room information by its number
+   * Get a room information by its number.
    *
    * @param roomNumber The room number
    *
@@ -49,7 +49,7 @@ public class RoomsApiController extends AbstractApiController {
   }
 
   /**
-   * Catches all calls for non allowed methods and throws a MethodNotAllowedException
+   * Catches all calls for non allowed methods and throws a MethodNotAllowedException.
    *
    * @throws MethodNotAllowedException
    */
@@ -60,17 +60,17 @@ public class RoomsApiController extends AbstractApiController {
   }
 
   /**
-   * Get all the rooms
+   * Get all the rooms.
    *
    * @return Information about all the rooms
    */
   @GetMapping
-  public RoomsDto getRooms(){
+  public RoomsDto getRooms() {
     return roomsFacade.findRooms();
   }
 
   /**
-   * Catches all calls for non allowed methods and throws a MethodNotAllowedException
+   * Catches all calls for non allowed methods and throws a MethodNotAllowedException.
    *
    * @throws MethodNotAllowedException
    */
@@ -79,6 +79,10 @@ public class RoomsApiController extends AbstractApiController {
     throw new MethodNotAllowedException();
   }
 
+  /**
+   *
+   * {@inheritDoc }
+   */
   @ExceptionHandler(value = {Exception.class})
   public ResponseEntity<ExceptionDto> exceptionHandler(final Exception e) {
     if (e instanceof RoomNotFoundException) {
