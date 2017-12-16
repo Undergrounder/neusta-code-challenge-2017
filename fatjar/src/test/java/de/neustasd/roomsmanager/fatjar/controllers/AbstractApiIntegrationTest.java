@@ -71,13 +71,15 @@ public abstract class AbstractApiIntegrationTest {
     final HttpHeaders header = new HttpHeaders();
     header.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-    final HttpHeaders fileHeader = new HttpHeaders();
-    fileHeader.setContentType(MediaType.parseMediaType("text/csv"));
+    if(path != null){
+      final HttpHeaders fileHeader = new HttpHeaders();
+      fileHeader.setContentType(MediaType.parseMediaType("text/csv"));
 
-    final Resource resource = new ClassPathResource(path);
-    final HttpEntity<Resource> importFileEntity = new HttpEntity<>(resource, fileHeader);
+      final Resource resource = new ClassPathResource(path);
+      final HttpEntity<Resource> importFileEntity = new HttpEntity<>(resource, fileHeader);
 
-    multipartRequest.add("file", importFileEntity);
+      multipartRequest.add("file", importFileEntity);
+    }
 
     final HttpEntity<MultiValueMap<String, Object>> requestEntity =
         new HttpEntity<>(multipartRequest, header);

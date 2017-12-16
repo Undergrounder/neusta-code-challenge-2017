@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 
 /** Created by Adrian Tello on 09/12/2017. */
 public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTest {
@@ -31,6 +32,11 @@ public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTe
     // Verify database
     assertNoRoomsInDatabase();
     assertNoPersonsInDatabase();
+  }
+
+  @Test
+  public void testNoFile() throws IOException {
+    doTestException(() -> postResource(null), HttpStatus.BAD_REQUEST, 400);
   }
 
   @Test
