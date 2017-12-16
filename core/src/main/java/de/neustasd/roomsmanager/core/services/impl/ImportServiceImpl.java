@@ -25,15 +25,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ImportServiceImpl implements ImportService {
 
-  @Autowired private Validator validator;
+  private final Validator validator;
 
-  @Autowired private RoomRepository roomRepository;
+  private final RoomRepository roomRepository;
 
-  @Autowired private PersonRepository personRepository;
+  private final PersonRepository personRepository;
 
-  @Autowired private RoomDataConverter roomDataConverter;
+  private final RoomDataConverter roomDataConverter;
 
-  @Autowired private PersonDataConverter personDataConverter;
+  private final PersonDataConverter personDataConverter;
+
+  @Autowired
+  public ImportServiceImpl(Validator validator, RoomRepository roomRepository, PersonRepository personRepository, RoomDataConverter roomDataConverter, PersonDataConverter personDataConverter) {
+    this.validator = validator;
+    this.roomRepository = roomRepository;
+    this.personRepository = personRepository;
+    this.roomDataConverter = roomDataConverter;
+    this.personDataConverter = personDataConverter;
+  }
 
   @Override
   @Transactional

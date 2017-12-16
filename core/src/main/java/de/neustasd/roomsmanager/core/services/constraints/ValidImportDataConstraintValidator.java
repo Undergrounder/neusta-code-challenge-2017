@@ -1,6 +1,5 @@
 package de.neustasd.roomsmanager.core.services.constraints;
 
-import de.neustasd.roomsmanager.core.services.ImportService;
 import de.neustasd.roomsmanager.core.services.data.ImportData;
 import de.neustasd.roomsmanager.core.services.data.PersonData;
 import de.neustasd.roomsmanager.core.services.data.RoomData;

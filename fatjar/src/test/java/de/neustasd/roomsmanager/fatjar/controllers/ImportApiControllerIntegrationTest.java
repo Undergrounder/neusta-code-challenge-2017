@@ -1,5 +1,8 @@
 package de.neustasd.roomsmanager.fatjar.controllers;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import de.neustasd.roomsmanager.core.entities.Person;
 import de.neustasd.roomsmanager.core.entities.Room;
 import de.neustasd.roomsmanager.facades.dto.ImportResultDto;
@@ -8,9 +11,6 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /** Created by Adrian Tello on 09/12/2017. */
 public class ImportApiControllerIntegrationTest extends AbstractApiIntegrationTest {
