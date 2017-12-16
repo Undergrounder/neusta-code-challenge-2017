@@ -62,6 +62,8 @@ public class ImportApiController extends AbstractApiController {
             case INVALID_ENTRY:
                 code = 4;
                 break;
+            default:
+                //code = 400
         }
 
         return code;
