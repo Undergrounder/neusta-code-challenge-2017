@@ -1,6 +1,8 @@
 # Wer Wo?
 Anwendung um schneller herauszubekommen, wer wo sitzt und wie man Leute im Schuppen findet.
 
+[![Build Status](https://travis-ci.org/Undergrounder/neusta-code-challenge-2017.svg?branch=master)](https://travis-ci.org/Undergrounder/neusta-code-challenge-2017)
+
 ## Voraussetzungen
 * Java 8
 * Tomcat 8, wenn man die "War"-Datei deployen will.
