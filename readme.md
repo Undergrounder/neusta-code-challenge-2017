@@ -1,11 +1,11 @@
-#Wer Wo?
+# Wer Wo?
 Anwendung um schneller herauszubekommen, wer wo sitzt und wie man Leute im Schuppen findet.
 
-##Voraussetzungen
+## Voraussetzungen
 * Java 8
 * Tomcat 8, wenn man die "War"-Datei deployen will.
 
-##Subprojekte
+## Subprojekte
 ```
                                /- fatjar
 core <- facades <- frontend <-|
@@ -76,9 +76,6 @@ gradlew :roomsmanager-war:bootRun
 
 ## Versionierung
 Wir benutzen [SemVer](https://semver.org/) für die Versionierung.
-
-##Copyright
-&copy; 2017 Team Neusta
 
 ## Authors
 * Tello Lasheras, Adrian (a.lasheras@neusta.de)
